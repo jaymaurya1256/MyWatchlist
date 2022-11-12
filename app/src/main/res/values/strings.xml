@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MyWatchlist</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="movies">Movies</string>
+    <string name="watch_list">Watchlist</string>
+    <string name="movie_details">Details</string>
+    <string name="title">Movie: </string>
+    <string name="description">Detailed Description</string>
+
+    <string name="contentDescription1">Hello blank fragment</string>
+    <string name="contentDescription2">Hello blank fragment</string>
+
+</resources>
