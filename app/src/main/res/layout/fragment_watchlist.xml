@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewWatchlist"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recycler_view_height"
         app:layout_constraintTop_toBottomOf="@+id/watchList"
