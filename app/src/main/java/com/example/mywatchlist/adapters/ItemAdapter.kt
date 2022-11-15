@@ -8,8 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMoviesBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
 
 class ItemAdapterForMovies: RecyclerView.Adapter<ItemAdapterForMovies.ItemViewHolder>() {
+
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val imageView = itemView.findViewById<ImageView>(R.id.image)
         val movieName = itemView.findViewById<TextView>(R.id.movieName)

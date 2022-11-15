@@ -11,12 +11,11 @@ class ItemAdapterForWatchlist: RecyclerView.Adapter<ItemAdapterForWatchlist.Item
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolderWatchlist {
-        val holder = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+        val holder = LayoutInflater.from(parent.context).inflate(R.layout.list_item_watchlist, parent,false)
         return ItemViewHolderWatchlist(holder as ViewGroup)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolderWatchlist, position: Int) {
-        TODO("Not yet implemented")
     }
 
     override fun getItemCount(): Int {

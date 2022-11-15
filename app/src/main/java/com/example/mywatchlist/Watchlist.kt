@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mywatchlist.adapters.ItemAdapterForWatchlist
 import com.example.mywatchlist.databinding.FragmentWatchlistBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Watchlist : Fragment() {
     private lateinit var binding: FragmentWatchlistBinding
 

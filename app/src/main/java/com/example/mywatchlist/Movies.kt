@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.adapters.ItemAdapterForMovies
 import com.example.mywatchlist.databinding.FragmentMoviesBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Movies : Fragment() {
     private lateinit var binding: FragmentMoviesBinding
 
