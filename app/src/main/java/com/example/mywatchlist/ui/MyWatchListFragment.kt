@@ -1,31 +1,29 @@
-package com.example.mywatchlist
+package com.example.mywatchlist.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.mywatchlist.adapters.ItemAdapterForMovies
-import com.example.mywatchlist.databinding.FragmentMoviesBinding
+import com.example.mywatchlist.ui.adapters.WatchlistAdapter
+import com.example.mywatchlist.databinding.FragmentWatchlistBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Movies : Fragment() {
-    private lateinit var binding: FragmentMoviesBinding
+class MyWatchListFragment : Fragment() {
+    private lateinit var binding: FragmentWatchlistBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        binding = FragmentWatchlistBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(),2)
-        binding.recyclerViewMovies.adapter = ItemAdapterForMovies()
+        binding.recyclerViewWatchlist.adapter = WatchlistAdapter()
     }
 }

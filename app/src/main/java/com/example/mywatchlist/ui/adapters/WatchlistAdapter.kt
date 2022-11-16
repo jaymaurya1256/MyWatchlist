@@ -1,12 +1,11 @@
-package com.example.mywatchlist.adapters
+package com.example.mywatchlist.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
 
-class ItemAdapterForWatchlist: RecyclerView.Adapter<ItemAdapterForWatchlist.ItemViewHolderWatchlist>() {
+class WatchlistAdapter: RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
     class ItemViewHolderWatchlist(itemView: ViewGroup): RecyclerView.ViewHolder(itemView){
     }
 

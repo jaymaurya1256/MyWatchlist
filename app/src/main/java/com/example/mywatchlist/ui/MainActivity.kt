@@ -1,11 +1,11 @@
- package com.example.mywatchlist
+ package com.example.mywatchlist.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.widget.ViewPager2
-import com.example.mywatchlist.adapters.ViewPagerAdapter
+import android.util.Log
+import com.example.mywatchlist.ui.adapters.ViewPagerAdapter
 import com.example.mywatchlist.databinding.ActivityMainBinding
+import com.example.mywatchlist.network.api.RetrofitInstance
 import dagger.hilt.android.AndroidEntryPoint
 
  @AndroidEntryPoint
@@ -16,7 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val listOfFragment = listOf(Movies(),Watchlist())
+        val listOfFragment = listOf(MoviesFragment(), MyWatchListFragment())
         binding.viewPager.adapter = ViewPagerAdapter(listOfFragment, this)
+
+
+        //Log.d("MainActivity", "onCreate: ${RetrofitInstance.movieAPI.getMovies()}")
     }
 }
