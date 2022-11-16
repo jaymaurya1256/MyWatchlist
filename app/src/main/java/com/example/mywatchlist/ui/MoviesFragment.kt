@@ -30,7 +30,7 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(),2)
-        viewModel.getMovies()
+        viewModel.getMoviesFromWeb()
 
         viewModel.movies?.observe(viewLifecycleOwner) {
             binding.recyclerViewMovies.adapter = MoviesAdapter(it)
