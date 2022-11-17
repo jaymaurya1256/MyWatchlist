@@ -1,14 +1,11 @@
 package com.example.mywatchlist.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
-interface DAO {
-    @Insert
+interface WatchlistDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addToWatchList(watchlistTable: WatchlistTable)
 
     @Delete

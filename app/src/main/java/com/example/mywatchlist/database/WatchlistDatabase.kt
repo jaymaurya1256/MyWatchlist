@@ -5,9 +5,5 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [WatchlistTable::class], version = 1)
 abstract class WatchlistDatabase: RoomDatabase() {
-    abstract fun daoProvider(): DAO
-}
-
-object DatabaseHolder{
-    lateinit var DB: WatchlistDatabase
+    abstract fun watchlistDao(): WatchlistDao
 }
