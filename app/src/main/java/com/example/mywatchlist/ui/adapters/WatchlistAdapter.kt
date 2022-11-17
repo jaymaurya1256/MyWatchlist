@@ -8,8 +8,11 @@ import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.databinding.ListItemWatchlistBinding
 
-class WatchlistAdapter(val watchListTables: List<WatchlistTable>): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
+class WatchlistAdapter(private val watchListTables: List<WatchlistTable>): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
     class ItemViewHolderWatchlist(val binding: ListItemWatchlistBinding): RecyclerView.ViewHolder(binding.root){
+        val title = binding.movieNameWatchlist
+        val detail = binding.descriptionWatchlist
+        val image = binding.imageWatchlist
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolderWatchlist {

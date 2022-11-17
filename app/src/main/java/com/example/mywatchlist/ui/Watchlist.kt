@@ -1,6 +1,7 @@
 package com.example.mywatchlist.ui
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.mywatchlist.database.DatabaseHolder
@@ -15,27 +16,29 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 const val BASE_URL = "https://api.themoviedb.org/3/movie/"
+lateinit var _appContext: Context
+val appContext get() = _appContext
 
 @HiltAndroidApp
 class Watchlist: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        _appContext = applicationContext
         //Room initialization
-        DatabaseHolder.DB = Room.databaseBuilder(this.applicationContext,
-            WatchlistDatabase::class.java,
-            "Watchlist_db"
-        ).build()
-
-
-        //Retrofit initialization
-        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-        RetrofitInstance.movieAPI = Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(BASE_URL)
-            .build()
-            .create(MoviesService::class.java)
-
+//        DatabaseHolder.DB = Room.databaseBuilder(this.applicationContext,
+//            WatchlistDatabase::class.java,
+//            "Watchlist_db"
+//        ).build()
+//
+//
+//        //Retrofit initialization
+//        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+//        RetrofitInstance.movieAPI = Retrofit.Builder()
+//            .addConverterFactory(MoshiConverterFactory.create(moshi))
+//            .baseUrl(BASE_URL)
+//            .build()
+//            .create(MoviesService::class.java)
+//
     }
 }
