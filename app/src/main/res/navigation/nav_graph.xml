@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/hilt_MoviesFragment">
+
+    <fragment
+        android:id="@+id/hilt_MoviesFragment"
+        android:name="com.example.mywatchlist.ui.Hilt_MoviesFragment"
+        android:label="Hilt_MoviesFragment" >
+        <action
+            android:id="@+id/action_hilt_MoviesFragment_to_hilt_MovieDetailsFragment"
+            app:destination="@id/hilt_MovieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hilt_MovieDetailsFragment"
+        android:name="com.example.mywatchlist.ui.Hilt_MovieDetailsFragment"
+        android:label="Hilt_MovieDetailsFragment" >
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="imageURL"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+</navigation>
