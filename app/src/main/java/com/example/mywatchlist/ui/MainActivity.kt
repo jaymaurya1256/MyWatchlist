@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import com.example.mywatchlist.ui.adapters.ViewPagerAdapter
 import com.example.mywatchlist.databinding.ActivityMainBinding
-import com.example.mywatchlist.network.api.RetrofitInstance
 import dagger.hilt.android.AndroidEntryPoint
 
  @AndroidEntryPoint
@@ -16,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val listOfFragment = listOf(MoviesFragment(), MyWatchListFragment())
+        val listOfFragment = listOf(HomeFragment(), MyWatchListFragment())
         binding.viewPager.adapter = ViewPagerAdapter(listOfFragment, this)
 
 

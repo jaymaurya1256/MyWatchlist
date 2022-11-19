@@ -1,7 +1,6 @@
 package com.example.mywatchlist.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,19 +30,12 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(),2)
-        try{
-            viewModel.getMoviesFromWeb()
-            Log.d(TAG, "onViewCreated: function getMovieFromWeb called successfully")
-        }catch (e:Exception){
-            Log.d(TAG, "onViewCreated: $e")
-        }
-        viewModel.movies?.observe(viewLifecycleOwner) { list ->
+        viewModel.movies.observe(viewLifecycleOwner) { list ->
             binding.recyclerViewMovies.adapter = MoviesAdapter(list){
-                val action = Hilt_MoviesFragmentDirections
-                    .actionHiltMoviesFragmentToHiltMovieDetailsFragment(it)
-                this.findNavController().navigate(action)
+                val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(it)
+                findNavController().navigate(action)
             }
-            Log.d("MoviesFragment", "onViewCreated: ${viewModel.movies?.value}")
         }
+        viewModel.getMoviesFromWeb()
     }
 }

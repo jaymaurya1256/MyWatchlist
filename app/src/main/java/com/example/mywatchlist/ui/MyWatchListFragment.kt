@@ -14,7 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MyWatchListFragment : Fragment() {
     private lateinit var binding: FragmentWatchlistBinding
-    val viewModel : WatchlistViewModel by viewModels()
+    private val viewModel : WatchlistViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

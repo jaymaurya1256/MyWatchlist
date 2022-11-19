@@ -6,13 +6,7 @@ import retrofit2.http.GET
 
 const val API_KEY = "8fa37f97887d4572adc080ab9662e405"
 
-
 interface MoviesService {
-
     @GET("top_rated?api_key=$API_KEY")
     suspend fun getMovies(): MoviesResponse
-}
-
-object RetrofitInstance {
-    lateinit var  movieAPI : MoviesService
 }
