@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.helper.widget.Carousel
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +13,7 @@ import com.example.mywatchlist.ui.adapters.MoviesAdapter
 import com.example.mywatchlist.databinding.FragmentMoviesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "MoviesFragment"
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
     private val viewModel : MoviesViewModel by viewModels()
@@ -31,8 +31,12 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(),2)
-        viewModel.getMoviesFromWeb()
-
+        try{
+            viewModel.getMoviesFromWeb()
+            Log.d(TAG, "onViewCreated: function getMovieFromWeb called successfully")
+        }catch (e:Exception){
+            Log.d(TAG, "onViewCreated: $e")
+        }
         viewModel.movies?.observe(viewLifecycleOwner) { list ->
             binding.recyclerViewMovies.adapter = MoviesAdapter(list){
                 val action = Hilt_MoviesFragmentDirections
