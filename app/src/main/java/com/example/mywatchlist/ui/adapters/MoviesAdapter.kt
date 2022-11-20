@@ -3,6 +3,7 @@ package com.example.mywatchlist.ui.adapters
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
@@ -35,6 +36,26 @@ class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int) ->
         holder.binding.root.setOnClickListener {
             onClick(movie.id)
         }
+        holder.binding.root.setOnLongClickListener {
+            val popupMenu = PopupMenu(it.context, it)
+            popupMenu.menuInflater.inflate(R.menu.menu_movie_fragment, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.addToWatchlistMenuItem -> {
+
+                        true
+                    }
+                    R.id.goToDescriptionMenuItem -> {
+                        onClick(movie.id)
+                        true
+                    }
+                    R.id.visitWebMenuItem -> true
+                    else -> {true}
+                }
+            }
+            true
+        }
+
     }
 
     override fun getItemCount(): Int {
