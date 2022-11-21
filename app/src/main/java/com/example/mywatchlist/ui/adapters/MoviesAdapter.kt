@@ -10,7 +10,8 @@ import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.Movie
 
-class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int) -> Unit): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+private const val TAG = "MoviesAdapter"
+class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, String, String, String, String) -> Unit): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
     class ItemViewHolder(val binding: ListItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
         val title = binding.movieName
         val summary = binding.description
@@ -34,19 +35,23 @@ class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int) ->
             description.text = movie.overview
         }
         holder.binding.root.setOnClickListener {
-            onClick(movie.id)
+            Log.d(TAG, "onBindViewHolder: onclick called")
+            onClick(movie.id,"","","","GoToDescription")
+            Log.d(TAG, "onBindViewHolder: onclick completed")
         }
         holder.binding.root.setOnLongClickListener {
+            Log.d(TAG, "onBindViewHolder: long click detected")
             val popupMenu = PopupMenu(it.context, it)
             popupMenu.menuInflater.inflate(R.menu.menu_movie_fragment, popupMenu.menu)
+            popupMenu.show()
             popupMenu.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.addToWatchlistMenuItem -> {
-
+                        onClick(movie.id, movie.title, movie.overview, movie.poster_path, "AddToWatchlist")
                         true
                     }
                     R.id.goToDescriptionMenuItem -> {
-                        onClick(movie.id)
+                        onClick(movie.id, movie.title, movie.overview, movie.poster_path, "GoToDescription")
                         true
                     }
                     R.id.visitWebMenuItem -> true

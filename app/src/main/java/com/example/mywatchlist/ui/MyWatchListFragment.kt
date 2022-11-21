@@ -27,9 +27,8 @@ class MyWatchListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.addMovie()
         viewModel.watchlist.observe(viewLifecycleOwner){
-            binding.recyclerViewWatchlist.layoutManager = GridLayoutManager(requireContext(), 2)
+            binding.recyclerViewWatchlist.layoutManager = GridLayoutManager(requireContext(), 1)
             binding.recyclerViewWatchlist.adapter = WatchlistAdapter(it)
         }
     }
