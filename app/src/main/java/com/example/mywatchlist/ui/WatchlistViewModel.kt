@@ -13,4 +13,10 @@ import javax.inject.Inject
 class WatchlistViewModel @Inject constructor(val db: WatchlistDao, val api: MoviesService): ViewModel() {
     var watchlist = db.getAllMovies()
 
+    fun removeFromList(id: Int){
+        viewModelScope.launch {
+            db.removeFromList(id)
+        }
+    }
+
 }

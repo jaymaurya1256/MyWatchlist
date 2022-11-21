@@ -6,6 +6,8 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.14945652173913043" />
         <entry key="app/src/main/res/drawable/ic_baseline_movie_filter_24.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/fragment_home2.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_movie_details.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_movies.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_watchlist.xml" value="0.19375" />
@@ -14,6 +16,7 @@
         <entry key="app/src/main/res/layout/list_item_movies.xml" value="0.13953488372093023" />
         <entry key="app/src/main/res/layout/list_item_watchlist.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/menu/menu_movie_fragment.xml" value="0.22" />
+        <entry key="app/src/main/res/menu/menu_watch_list.xml" value="0.19270833333333334" />
       </map>
     </option>
   </component>

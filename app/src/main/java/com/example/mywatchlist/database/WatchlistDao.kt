@@ -8,12 +8,12 @@ interface WatchlistDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addToWatchList(watchlistTable: WatchlistTable)
 
-    @Delete
-    suspend fun removeFromList(watchlistTable: WatchlistTable)
+    @Query("DELETE FROM WatchlistTable WHERE id == :id")
+    suspend fun removeFromList(id: Int)
 
-    @Query("delete from WatchlistTable")
+    @Query("DELETE FROM WatchlistTable")
     suspend fun clearList()
 
-    @Query("select * from WatchlistTable")
+    @Query("SELECT * FROM WatchlistTable")
     fun getAllMovies(): LiveData<List<WatchlistTable>>
 }
