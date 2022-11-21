@@ -1,16 +1,16 @@
-package com.example.mywatchlist.ui.adapters
+package com.example.mywatchlist.ui.movies
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.Movie
 
 private const val TAG = "MoviesAdapter"
+
 class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, String, String, String, String) -> Unit): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
     class ItemViewHolder(val binding: ListItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
         val title = binding.movieName

@@ -1,15 +1,17 @@
-package com.example.mywatchlist.ui
+package com.example.mywatchlist.ui.movies
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.network.api.MoviesService
 import com.example.mywatchlist.network.entity.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 private const val TAG = "MoviesViewModel"
 
@@ -18,7 +20,7 @@ class MoviesViewModel @Inject constructor(private val api: MoviesService, privat
     var movies = MutableLiveData<List<Movie>>()
 
     fun getMoviesFromWeb(){
-        viewModelScope.launch() {
+        viewModelScope.launch {
             try {
                 movies.value = api.getMovies().results
                 Log.d(TAG, "getMovies: Success")

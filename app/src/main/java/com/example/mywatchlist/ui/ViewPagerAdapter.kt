@@ -1,4 +1,4 @@
-package com.example.mywatchlist.ui.adapters
+package com.example.mywatchlist.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

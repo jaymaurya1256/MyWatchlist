@@ -1,13 +1,10 @@
 package com.example.mywatchlist.di
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
-import androidx.fragment.app.viewModels
 import androidx.room.Room
 import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistDatabase
 import com.example.mywatchlist.network.api.MoviesService
-import com.example.mywatchlist.ui.WatchlistViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

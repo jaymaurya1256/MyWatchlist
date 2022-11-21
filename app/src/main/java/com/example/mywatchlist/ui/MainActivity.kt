@@ -2,9 +2,9 @@
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.example.mywatchlist.ui.adapters.ViewPagerAdapter
 import com.example.mywatchlist.databinding.ActivityMainBinding
+import com.example.mywatchlist.ui.movies.MoviesContainerFragment
+import com.example.mywatchlist.ui.watchlist.WatchlistContainerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
  @AndroidEntryPoint
@@ -14,11 +14,10 @@ import dagger.hilt.android.AndroidEntryPoint
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        val listOfFragment = listOf(HomeFragment(), HomeFragment2())
-        binding.viewPager.adapter = ViewPagerAdapter(listOfFragment, this)
 
-
-        //Log.d("MainActivity", "onCreate: ${RetrofitInstance.movieAPI.getMovies()}")
+        binding.viewPager.adapter = ViewPagerAdapter(
+            listOf(MoviesContainerFragment(), WatchlistContainerFragment()),
+            this
+        )
     }
 }

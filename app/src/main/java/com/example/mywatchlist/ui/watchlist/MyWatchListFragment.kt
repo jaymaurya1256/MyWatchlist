@@ -1,4 +1,4 @@
-package com.example.mywatchlist.ui
+package com.example.mywatchlist.ui.watchlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.mywatchlist.ui.adapters.WatchlistAdapter
 import com.example.mywatchlist.databinding.FragmentWatchlistBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +34,7 @@ class MyWatchListFragment : Fragment() {
                     "remove" -> viewModel.removeFromList(movieId)
                     "gotoDescription" -> {
                         val navigationAction = MyWatchListFragmentDirections
-                                .actionMyWatchListFragmentToMovieDetailsFragment2(movieId)
+                                .actionMyWatchListFragmentToMovieDetailsFragment(movieId)
                         findNavController().navigate(navigationAction)
                     }
                 }

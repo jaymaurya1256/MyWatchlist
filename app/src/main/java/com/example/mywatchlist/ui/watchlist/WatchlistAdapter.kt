@@ -1,13 +1,11 @@
-package com.example.mywatchlist.ui.adapters
+package com.example.mywatchlist.ui.watchlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
-import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.databinding.ListItemWatchlistBinding
 
 class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, String) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {

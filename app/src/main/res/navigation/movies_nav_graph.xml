@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/movies_nav_graph"
     app:startDestination="@id/moviesFragment">
 
     <fragment
         android:id="@+id/moviesFragment"
-        android:name="com.example.mywatchlist.ui.MoviesFragment"
+        android:name="com.example.mywatchlist.ui.movies.MoviesFragment"
         android:label="fragment_movies"
         tools:layout="@layout/fragment_movies" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.example.mywatchlist.ui.MovieDetailsFragment"
+        android:name="com.example.mywatchlist.ui.movies.MovieDetailsFragment"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details" >
         <argument

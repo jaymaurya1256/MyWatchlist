@@ -1,4 +1,4 @@
-package com.example.mywatchlist.ui
+package com.example.mywatchlist.ui.watchlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
