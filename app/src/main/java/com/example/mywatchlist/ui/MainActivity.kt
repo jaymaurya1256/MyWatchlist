@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val listOfFragment = listOf(HomeFragment(), MyWatchListFragment())
+        val listOfFragment = listOf(HomeFragment(), HomeFragment2())
         binding.viewPager.adapter = ViewPagerAdapter(listOfFragment, this)
 
 
