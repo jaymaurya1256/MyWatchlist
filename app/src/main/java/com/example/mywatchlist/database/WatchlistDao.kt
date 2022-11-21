@@ -2,6 +2,7 @@ package com.example.mywatchlist.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.mywatchlist.network.entity.Movie
 
 @Dao
 interface WatchlistDao {
@@ -16,4 +17,7 @@ interface WatchlistDao {
 
     @Query("SELECT * FROM WatchlistTable")
     fun getAllMovies(): LiveData<List<WatchlistTable>>
+
+    @Query("SELECT * FROM WatchlistTable WHERE id == :id")
+    fun getDetailsForId(id: Int): WatchlistTable
 }
