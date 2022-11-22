@@ -1,9 +1,8 @@
 package com.example.mywatchlist.ui
 
 import android.app.Application
-import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 
 
 @HiltAndroidApp
-class Watchlist : Application()
+class WatchlistApplication : Application()

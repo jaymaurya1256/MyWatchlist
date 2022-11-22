@@ -47,4 +47,11 @@ object Module {
     fun provideDao(db: WatchlistDatabase): WatchlistDao {
         return db.watchlistDao()
     }
+
+//    @Provides
+//    @Singleton
+//    fun watchListViewModel(db: WatchlistDao): WatchlistViewModel{
+//        val viewModel = WatchlistViewModel by viewModels()
+//        return viewModel
+//    }
 }
