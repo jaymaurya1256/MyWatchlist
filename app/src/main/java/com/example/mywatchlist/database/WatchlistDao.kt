@@ -2,7 +2,6 @@ package com.example.mywatchlist.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.mywatchlist.network.entity.Movie
 
 @Dao
 interface WatchlistDao {

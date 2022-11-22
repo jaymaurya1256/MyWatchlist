@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.network.api.MoviesService
-import com.example.mywatchlist.network.entity.Movie
+import com.example.mywatchlist.network.entity.moviedetails.MoviesDetails
+import com.example.mywatchlist.network.entity.movieslist.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.lang.Exception
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 

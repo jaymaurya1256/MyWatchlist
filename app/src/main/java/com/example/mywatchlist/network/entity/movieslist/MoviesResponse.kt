@@ -1,4 +1,6 @@
-package com.example.mywatchlist.network.entity
+package com.example.mywatchlist.network.entity.movieslist
+
+import com.example.mywatchlist.network.entity.movieslist.Movie
 
 data class MoviesResponse(
     val page: Int,

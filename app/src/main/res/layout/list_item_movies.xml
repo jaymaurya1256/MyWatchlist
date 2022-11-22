@@ -17,14 +17,14 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/movieName"
-            android:text="Movie Title"
+            android:text=""
             android:textAlignment="center"
             android:textSize="30sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/description"
-            android:text="Movie Description"
+            android:text=""
             android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -7,7 +7,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
-import com.example.mywatchlist.network.entity.Movie
+import com.example.mywatchlist.network.entity.movieslist.Movie
 
 private const val TAG = "MoviesAdapter"
 

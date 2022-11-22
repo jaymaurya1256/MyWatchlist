@@ -1,4 +1,4 @@
-package com.example.mywatchlist.network.entity
+package com.example.mywatchlist.network.entity.movieslist
 
 data class Movie(
     val adult: Boolean,

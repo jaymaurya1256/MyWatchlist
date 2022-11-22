@@ -35,7 +35,7 @@ class MoviesFragment : Fragment() {
         Log.d(TAG, "onViewCreated: after layout manager")
         Log.d(
             TAG,
-            "onViewCreated: calling the function to featch movie from web"
+            "onViewCreated: calling the function to fetch movie from web"
         )
         viewModel.getMoviesFromWeb()
         Log.d(TAG, "onViewCreated: call completed")
