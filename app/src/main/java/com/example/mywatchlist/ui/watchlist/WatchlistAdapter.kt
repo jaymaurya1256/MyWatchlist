@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.ListItemWatchlistBinding
+import com.example.mywatchlist.ui.Utils
 
-class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, String) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
+class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, Utils) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
     class ItemViewHolderWatchlist(val binding: ListItemWatchlistBinding): RecyclerView.ViewHolder(binding.root){
         val title = binding.movieNameWatchlist
         val detail = binding.descriptionWatchlist
@@ -36,11 +37,11 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
             popupMenu.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.removeFromListMenuItem -> {
-                        onClick(movie.id, "remove")
+                        onClick(movie.id, Utils.REMOVE)
                         true
                     }
                     R.id.goToDescriptionFromWatchlistMenuItem -> {
-                        onClick(movie.id, "gotoDescription")
+                        onClick(movie.id, Utils.GOTODESCRIPTION)
                         true
                     }
                     else -> true

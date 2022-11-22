@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.movieslist.Movie
+import com.example.mywatchlist.ui.Utils
 
 private const val TAG = "MoviesAdapter"
 
-class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, String, String, String, String) -> Unit): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, String, String, String, Utils) -> Unit): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
     class ItemViewHolder(val binding: ListItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
         val title = binding.movieName
         val summary = binding.description
@@ -36,7 +37,7 @@ class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, St
         }
         holder.binding.root.setOnClickListener {
             Log.d(TAG, "onBindViewHolder: onclick called")
-            onClick(movie.id,"","","","GoToDescription")
+            onClick(movie.id,"","","",Utils.GOTODESCRIPTION)
             Log.d(TAG, "onBindViewHolder: onclick completed")
         }
         holder.binding.root.setOnLongClickListener {
@@ -47,11 +48,11 @@ class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, St
             popupMenu.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.addToWatchlistMenuItem -> {
-                        onClick(movie.id, movie.title, movie.overview, movie.poster_path, "AddToWatchlist")
+                        onClick(movie.id, movie.title, movie.overview, movie.poster_path, Utils.ADDTOWATCHLIST)
                         true
                     }
                     R.id.goToDescriptionMenuItem -> {
-                        onClick(movie.id, movie.title, movie.overview, movie.poster_path, "GoToDescription")
+                        onClick(movie.id, movie.title, movie.overview, movie.poster_path, Utils.GOTODESCRIPTION)
                         true
                     }
                     R.id.visitWebMenuItem -> true

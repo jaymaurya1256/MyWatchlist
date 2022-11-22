@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.databinding.FragmentWatchlistBinding
+import com.example.mywatchlist.ui.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +32,8 @@ class MyWatchListFragment : Fragment() {
             binding.recyclerViewWatchlist.layoutManager = GridLayoutManager(requireContext(), 1)
             binding.recyclerViewWatchlist.adapter = WatchlistAdapter(it){ movieId, action ->
                 when(action){
-                    "remove" -> viewModel.removeFromList(movieId)
-                    "gotoDescription" -> {
+                    Utils.REMOVE -> viewModel.removeFromList(movieId)
+                    Utils.GOTODESCRIPTION -> {
                         val navigationAction = MyWatchListFragmentDirections
                                 .actionMyWatchListFragmentToMovieDetailsFragment(movieId)
                         findNavController().navigate(navigationAction)
