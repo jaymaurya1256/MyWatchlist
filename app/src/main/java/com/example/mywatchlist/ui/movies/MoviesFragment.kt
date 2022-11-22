@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.databinding.FragmentMoviesBinding
+import com.example.mywatchlist.ui.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MoviesFragment"
@@ -43,7 +44,7 @@ class MoviesFragment : Fragment() {
             binding.recyclerViewMovies.adapter =
                 MoviesAdapter(list) { movieId, title, description, image, action ->
                     when (action) {
-                        "GoToDescription" -> {
+                         Utils.GOTODESCRIPTION -> {
                             val navigationAction =
                                 MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
                                     movieId
@@ -51,7 +52,7 @@ class MoviesFragment : Fragment() {
                             findNavController().navigate(navigationAction)
                         }
 
-                        "AddToWatchlist" -> {
+                        Utils.ADDTOWATCHLIST -> {
                             viewModel.addMovieToWatchlist(movieId, title, description, image)
                         }
 
