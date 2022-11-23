@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistDatabase
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.network.api.MoviesService
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "MovieDetailViewModel"
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val db: WatchlistDatabase, private val api: MoviesService) : ViewModel(){
+class MovieDetailViewModel @Inject constructor(private val db: WatchlistDao, private val api: MoviesService) : ViewModel(){
     var requestedMovie = MutableLiveData<MoviesDetails>()
 
     fun getMovieDetails(movieId: Int){
@@ -31,9 +32,9 @@ class MovieDetailViewModel @Inject constructor(private val db: WatchlistDatabase
     }
 
 
-    fun addToWatchlist(id: Int, title: String, description: String, imageURL: String){
+    fun addToWatchlist(id: Int, title: String, description: String, imageURL: String, isAdult: Boolean){
         viewModelScope.launch {
-            db.watchlistDao().addToWatchList(WatchlistTable(id, title, description, imageURL))
+            db.addToWatchList(WatchlistTable(id, title, description, imageURL, isAdult))
         }
     }
 }

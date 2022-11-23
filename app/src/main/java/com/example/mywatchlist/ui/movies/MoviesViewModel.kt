@@ -30,10 +30,10 @@ class MoviesViewModel @Inject constructor(private val api: MoviesService, privat
         }
     }
 
-    fun addMovieToWatchlist(id: Int, title: String, description: String, image: String) {
+    fun addMovieToWatchlist(id: Int, title: String, description: String, image: String, isAdult: Boolean) {
         viewModelScope.launch {
             db.addToWatchList(
-                WatchlistTable(id, title, description, image)
+                WatchlistTable(id, title, description, image, isAdult)
             )
         }
     }

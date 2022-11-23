@@ -42,9 +42,9 @@ class MoviesFragment : Fragment() {
         Log.d(TAG, "onViewCreated: call completed")
         viewModel.movies.observe(viewLifecycleOwner) { list ->
             binding.recyclerViewMovies.adapter =
-                MoviesAdapter(list) { movieId, title, description, image, action ->
+                MoviesAdapter(list) { movieId, title, description, image, isActive, action ->
                     when (action) {
-                         Utils.GOTODESCRIPTION -> {
+                        Utils.GOTODESCRIPTION -> {
                             val navigationAction =
                                 MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
                                     movieId
@@ -53,11 +53,10 @@ class MoviesFragment : Fragment() {
                         }
 
                         Utils.ADDTOWATCHLIST -> {
-                            viewModel.addMovieToWatchlist(movieId, title, description, image)
+                            viewModel.addMovieToWatchlist(movieId, title, description, image, isActive)
                         }
 
-                        else -> {// TODO: yet to be implemented }
-                        }
+                        else -> {}          // TODO: yet to be implemented
                     }
                 }
         }

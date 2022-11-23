@@ -13,8 +13,9 @@
         <ImageView
             android:id="@+id/image"
             android:src="@drawable/place_holder_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="170dp"
+            android:layout_height="255dp"
+            android:scaleType="fitXY"/>
         <TextView
             android:id="@+id/movieName"
             android:text=""

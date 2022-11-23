@@ -1,7 +1,7 @@
 package com.example.mywatchlist.network.entity.moviedetails
 
 data class MoviesDetails(
-    val adult: Boolean?,
+    val adult: Boolean,
     val backdrop_path: String?,
     val belongs_to_collection: Any?,
     val budget: Int?,
