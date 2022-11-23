@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.databinding.FragmentWatchlistBinding
 import com.example.mywatchlist.ui.Utils
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +33,10 @@ class MyWatchListFragment : Fragment() {
             binding.recyclerViewWatchlist.layoutManager = GridLayoutManager(requireContext(), 1)
             binding.recyclerViewWatchlist.adapter = WatchlistAdapter(it){ movieId, action ->
                 when(action){
-                    Utils.REMOVE -> viewModel.removeFromList(movieId)
+                    Utils.REMOVE -> {
+                        viewModel.removeFromList(movieId)
+                        Snackbar.make(binding.root, "Movie removed from Watchlist", Snackbar.LENGTH_SHORT).show()
+                    }
                     Utils.GOTODESCRIPTION -> {
                         val navigationAction = MyWatchListFragmentDirections
                                 .actionMyWatchListFragmentToMovieDetailsFragment(movieId)
