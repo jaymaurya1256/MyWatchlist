@@ -10,5 +10,6 @@ data class WatchlistTable(
     @PrimaryKey val id : Int,
     val title: String,
     @Nullable val description: String,
-    @Nullable val image: String
+    @Nullable val image: String,
+    @Nullable val isAdult: Boolean
 )

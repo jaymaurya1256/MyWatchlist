@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.ListItemWatchlistBinding
 import com.example.mywatchlist.ui.Utils
+import com.example.mywatchlist.ui.movies.BASE_URL_FOR_IMAGE
 
 class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, Utils) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
     class ItemViewHolderWatchlist(val binding: ListItemWatchlistBinding): RecyclerView.ViewHolder(binding.root){
@@ -28,7 +30,18 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
         with(holder.binding){
             movieNameWatchlist.text = movie.title
             descriptionWatchlist.text = movie.description
-            imageWatchlist.setImageResource(R.drawable.place_holder_image)
+            if (movie.isAdult) {
+                audienceRating.text = "A"
+            }
+            try {
+                imageWatchlist.load(BASE_URL_FOR_IMAGE +movie.image){
+                    placeholder(R.drawable.place_holder_image)
+                    crossfade(true)
+                    crossfade(1000)
+                }
+            }catch (e: Exception){
+                imageWatchlist.load(R.drawable.image_load_error)
+            }
         }
         holder.binding.root.setOnLongClickListener {
             val popupMenu = PopupMenu(holder.binding.root.context, holder.binding.root)

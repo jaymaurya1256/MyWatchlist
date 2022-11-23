@@ -10,11 +10,14 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MovieDetailsFragment"
+const val BASE_URL_FOR_IMAGE = "https://www.themoviedb.org/t/p/original"
+
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
     private val viewModel: MovieDetailViewModel by viewModels()
@@ -42,8 +45,13 @@ class MovieDetailsFragment : Fragment() {
                 Log.d(TAG, "onViewCreated: $movieDetails")
                 if (movieDetails != null) {
                     title.text = movieDetails.title
-                    movieImage.setImageResource(R.drawable.place_holder_image)
                     scrollableDescriptionText.text = movieDetails.overview
+                    Log.d(TAG, "onViewCreated: MoviePosterURL is -> ${BASE_URL_FOR_IMAGE+movieDetails.poster_path}")
+                    movieImage.load(BASE_URL_FOR_IMAGE+movieDetails.poster_path){
+                        crossfade(true)
+                        crossfade(1000)
+                        placeholder(R.drawable.place_holder_image)
+                    }
 
                     visitWebFragmentDetail.setOnClickListener {} // TODO: add functionality for web visit
 
@@ -52,7 +60,8 @@ class MovieDetailsFragment : Fragment() {
                             movieDetails.id,
                             movieDetails.title,
                             movieDetails.overview,
-                            movieDetails.poster_path
+                            movieDetails.poster_path,
+                            movieDetails.adult
                         )
                     }
                 }
