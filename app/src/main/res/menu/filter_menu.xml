@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popular_filter"
+        android:title="@string/popular_filter"/>
+    <item
+        android:id="@+id/new_releases_filter"
+        android:title="@string/new_filter"/>
+    <item
+        android:id="@+id/top_filter"
+        android:title="@string/top_filter"/>
+    <item
+        android:id="@+id/crime_filter"
+        android:title="@string/crime_filter"/>
+    <item
+        android:id="@+id/drama_filter"
+        android:title="@string/drama_filter"/>
+    <item
+        android:id="@+id/comedy_filter"
+        android:title="@string/comedy_filter"/>
+    <item
+        android:id="@+id/action_filter"
+        android:title="@string/action_filter"/>
+    <item
+        android:id="@+id/suspense_filter"
+        android:title="@string/suspense_filter"/>
+    <item
+        android:id="@+id/thriller_filter"
+        android:title="@string/thriller_filter"/>
+    <item
+        android:id="@+id/horror_filter"
+        android:title="@string/horror_filter"/>
+
+</menu>
