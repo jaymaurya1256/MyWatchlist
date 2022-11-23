@@ -30,12 +30,12 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
         with(holder.binding){
             movieNameWatchlist.text = movie.title
             descriptionWatchlist.text = movie.description
-            if (movie.isAdult == true) {
-
+            if (movie.isAdult) {
+                audienceRating.text = "A"
             }
             try {
-                imageWatchlist.load(com.example.mywatchlist.ui.movies.BASE_URL_FOR_IMAGE +movie.image){
-                    placeholder(com.example.mywatchlist.R.drawable.place_holder_image)
+                imageWatchlist.load(BASE_URL_FOR_IMAGE +movie.image){
+                    placeholder(R.drawable.place_holder_image)
                     crossfade(true)
                     crossfade(1000)
                 }
