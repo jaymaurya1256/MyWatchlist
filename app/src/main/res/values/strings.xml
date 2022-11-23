@@ -16,4 +16,17 @@
     <string name="remove_from_watchlist">Remove from Watchlist</string>
     <string name="see_description">Go to Description</string>
     <string name="visit_web">Visit on Web</string>
+
+    <string name="popular_filter">Popular</string>
+    <string name="new_filter">New Releases</string>
+    <string name="top_filter">Top Rated</string>
+    <string name="crime_filter">Crime</string>
+    <string name="drama_filter">Drama</string>
+    <string name="comedy_filter">Comedy</string>
+    <string name="action_filter">Action</string>
+    <string name="suspense_filter">Suspense</string>
+    <string name="thriller_filter">Thriller</string>
+    <string name="horror_filter">Horror</string>
+
+
 </resources>
