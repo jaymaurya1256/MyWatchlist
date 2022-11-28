@@ -17,8 +17,6 @@ private const val TAG = "MoviesViewModel"
 @HiltViewModel
 class MoviesViewModel @Inject constructor(private val api: MoviesService, private val db: WatchlistDao) : ViewModel(){
     var movies = MutableLiveData<List<Movie>>()
-    var moviesByGenre = MutableLiveData<List<Movie>>()
-
     fun getMoviesFromWeb(){
         viewModelScope.launch {
             try {
@@ -32,7 +30,7 @@ class MoviesViewModel @Inject constructor(private val api: MoviesService, privat
     fun getMoviesFromWebGenre(genreId: Int){
         viewModelScope.launch {
             try {
-                moviesByGenre.value = api.getMoviesGenre(genreId).movies
+                movies.value = api.getMoviesGenre(genreId.toString()).movies
                 Log.d(TAG, "getMovies: Success from lifecycle scope")
             } catch (e: Exception){
                 Log.d(TAG, "getMovies: ${e.message}")

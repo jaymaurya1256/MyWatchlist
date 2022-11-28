@@ -13,8 +13,8 @@ interface MoviesService {
     @GET("movie/top_rated?api_key=$API_KEY")
     suspend fun getMovies(): MoviesResponse
 
-    @GET("discover/movie?api_key=${API_KEY}&with_genres={genreId}")
-    suspend fun getMoviesGenre(@Query("genreId") genreId: Int): MoviesFilteredByGenres
+    @GET("discover/movie?api_key=${API_KEY}&with_genres={genreID}")
+    suspend fun getMoviesGenre(@Query("genreId") genreId: String): MoviesFilteredByGenres
 
     @GET("movie/{movieId}?api_key=${API_KEY}&language=en-US")
     suspend fun getDetail(@Path("movieId") movieId: Int): MoviesDetails
