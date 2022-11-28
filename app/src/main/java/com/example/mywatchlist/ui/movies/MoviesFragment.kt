@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMoviesBinding
+import com.example.mywatchlist.databinding.FragmentSearchBinding
 import com.example.mywatchlist.ui.Utils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,44 +36,124 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val isFilterSet = MutableLiveData<Boolean>(false)
+        viewModel.getMoviesFromWeb()
+        binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.listFilterIcon.setOnClickListener {
             val popupMenu = PopupMenu(this.requireContext(), binding.listFilterIcon)
             popupMenu.menuInflater.inflate(R.menu.filter_menu,popupMenu.menu)
             popupMenu.show()
+            popupMenu.setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.crime_filter -> {
+                        Log.d(TAG, "onViewCreated: Click Detected")
+                        viewModel.getMoviesFromWebGenre(80)
+                        isFilterSet.value = true
+                        true
+                    }
+                    R.id.drama_filter -> {
+                        viewModel.getMoviesFromWebGenre(18)
+                        isFilterSet.value = true
+                        true
+                    }
+                    R.id.comedy_filter -> {
+                        viewModel.getMoviesFromWebGenre(35)
+                        isFilterSet.value = true
+                        true
+                    }
+                    R.id.action_filter -> {
+                        viewModel.getMoviesFromWebGenre(28)
+                        isFilterSet.value = true
+                        true
+                    }
+                    R.id.suspense_filter -> {
+                        viewModel.getMoviesFromWebGenre(9648)
+                        isFilterSet.value = true
+                        true
+                    }
+                    R.id.thriller_filter -> {
+                        viewModel.getMoviesFromWebGenre(53)
+                        isFilterSet.value = true
+                        true
+                    }
+                    R.id.horror_filter -> {
+                        viewModel.getMoviesFromWebGenre(27)
+                        isFilterSet.value = true
+                        true
+                    }
+                    R.id.top_filter -> {
+                        isFilterSet.value = false
+                        true
+                    }
+                    else -> {true}
+                }
+            }
         }
-        Log.d(TAG, "onViewCreated: before layout manager")
-        binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(), 2)
-        Log.d(TAG, "onViewCreated: after layout manager")
-        Log.d(
-            TAG,
-            "onViewCreated: calling the function to fetch movie from web"
-        )
-        viewModel.getMoviesFromWeb()
-        Log.d(TAG, "onViewCreated: call completed")
-        viewModel.movies.observe(viewLifecycleOwner) { list ->
-            binding.recyclerViewMovies.adapter =
-                MoviesAdapter(list) { movieId, title, description, image, isActive, action ->
-                    when (action) {
-                        Utils.GOTODESCRIPTION -> {
-                            val navigationAction =
-                                MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
-                                    movieId
-                                )
-                            findNavController().navigate(navigationAction)
-                        }
+        binding.searchMovies.setOnClickListener {
+            findNavController().navigate(MoviesFragmentDirections.actionMoviesFragmentToSearchFragment())
+        }
 
-                        Utils.ADDTOWATCHLIST -> {
-                            try {
-                                viewModel.addMovieToWatchlist(movieId, title, description, image, isActive)
-                                Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
-                            }catch (e: Exception){
-                                Snackbar.make(binding.root, "Something went wrong: $e", Snackbar.LENGTH_SHORT).show()
+        isFilterSet.observe(viewLifecycleOwner) {
+            Log.d(TAG, "onViewCreated: inside isFilter observer")
+            if (it == true) {
+                viewModel.moviesByGenre.observe(viewLifecycleOwner) { list ->
+                    Log.d(TAG, "onViewCreated: ${viewModel.moviesByGenre}")
+                    binding.recyclerViewMovies.adapter =
+                        MoviesAdapter(list) { movieId, title, description, image, isActive, action ->
+                            when (action) {
+                                Utils.GOTODESCRIPTION -> {
+                                    val navigationAction =
+                                        MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
+                                            movieId
+                                        )
+                                    findNavController().navigate(navigationAction)
+                                }
+
+                                Utils.ADDTOWATCHLIST -> {
+                                    try {
+                                        viewModel.addMovieToWatchlist(movieId, title, description, image, isActive)
+                                        Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
+                                    }catch (e: Exception){
+                                        Snackbar.make(binding.root, "Something went wrong: $e", Snackbar.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                                else -> {}          // TODO: yet to be implemented
                             }
                         }
 
-                        else -> {}          // TODO: yet to be implemented
-                    }
                 }
+            }
+        }
+        isFilterSet.observe(viewLifecycleOwner) {
+            if (it == false) {
+                viewModel.movies.observe(viewLifecycleOwner) { list ->
+                    binding.recyclerViewMovies.adapter =
+                        MoviesAdapter(list) { movieId, title, description, image, isActive, action ->
+                            when (action) {
+                                Utils.GOTODESCRIPTION -> {
+                                    val navigationAction =
+                                        MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
+                                            movieId
+                                        )
+                                    findNavController().navigate(navigationAction)
+                                }
+
+                                Utils.ADDTOWATCHLIST -> {
+                                    try {
+                                        viewModel.addMovieToWatchlist(movieId, title, description, image, isActive)
+                                        Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
+                                    }catch (e: Exception){
+                                        Snackbar.make(binding.root, "Something went wrong: $e", Snackbar.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                                else -> {}          // TODO: yet to be implemented
+                            }
+                        }
+
+                }
+            }
         }
     }
 }

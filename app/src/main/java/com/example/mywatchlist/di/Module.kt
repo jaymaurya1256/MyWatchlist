@@ -16,7 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
-const val BASE_URL = "https://api.themoviedb.org/3/movie/"
+const val BASE_URL = "https://api.themoviedb.org/3/"
 @Module
 @InstallIn(SingletonComponent::class)
 object Module {

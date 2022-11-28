@@ -14,6 +14,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/clear_watchlist"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="22dp"
+        android:src="@drawable/ic_baseline_delete_sweep_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/delete_all" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWatchlist"
         android:layout_width="match_parent"
