@@ -27,6 +27,9 @@
     <string name="suspense_filter">Suspense</string>
     <string name="thriller_filter">Thriller</string>
     <string name="horror_filter">Horror</string>
+    <string name="delete_all">Delete All</string>
+    <string name="search_for_movies">Search For Movies</string>
+    <string name="search">Search</string>
 
 
 </resources>
