@@ -16,7 +16,7 @@ interface MoviesService {
     @GET("discover/movie")
     suspend fun getMoviesGenre(
         @Query("with_genres") genreId: Int,
-        @Query("api_key") apiKey: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY
     ): MoviesFilteredByGenres
 
     @GET("movie/{movieId}?api_key=${API_KEY}&language=en-US")

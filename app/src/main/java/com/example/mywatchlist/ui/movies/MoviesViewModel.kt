@@ -27,11 +27,12 @@ class MoviesViewModel @Inject constructor(private val api: MoviesService, privat
             }
         }
     }
+
     fun getMoviesFromWebGenre(genreId: Int){
         viewModelScope.launch {
             try {
                 movies.value = api.getMoviesGenre(genreId).results
-                Log.d(TAG, "getMovies: Success from lifecycle scope")
+                Log.d(TAG, "getMovies: Success from lifecycle scope and the contents are: ${movies.value}")
             } catch (e: Exception){
                 Log.d(TAG, "getMovies: ${e.message}")
             }

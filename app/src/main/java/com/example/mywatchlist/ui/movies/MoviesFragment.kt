@@ -57,6 +57,7 @@ class MoviesFragment : Fragment() {
                         true
                     }
                     R.id.action_filter -> {
+                        Log.d(TAG, "onViewCreated: Click detected in action button")
                         viewModel.getMoviesFromWebGenre(28)
                         true
                     }
@@ -73,6 +74,7 @@ class MoviesFragment : Fragment() {
                         true
                     }
                     R.id.top_filter -> {
+                        viewModel.getMoviesFromWeb()
                         true
                     }
                     else -> {true}
