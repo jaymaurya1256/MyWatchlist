@@ -21,4 +21,10 @@ interface MoviesService {
 
     @GET("movie/{movieId}?api_key=${API_KEY}&language=en-US")
     suspend fun getDetail(@Path("movieId") movieId: Int): MoviesDetails
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("query") keyword: String,
+        @Query("api_key") apiKey: String = API_KEY
+    ): MoviesResponse
 }

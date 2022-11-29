@@ -17,6 +17,7 @@ private const val TAG = "MoviesViewModel"
 @HiltViewModel
 class MoviesViewModel @Inject constructor(private val api: MoviesService, private val db: WatchlistDao) : ViewModel(){
     var movies = MutableLiveData<List<Movie>>()
+
     fun getMoviesFromWeb(){
         viewModelScope.launch {
             try {
@@ -47,4 +48,14 @@ class MoviesViewModel @Inject constructor(private val api: MoviesService, privat
         }
     }
 
+    fun searchMovies(keyword: String){
+        viewModelScope.launch{
+            try {
+                movies.value = api.searchMovie(keyword).results
+                Log.d(TAG, "searchMovies: Success with result ${movies.value}")
+            }catch (e: Exception) {
+                Log.d(TAG, "searchMovies: $e")
+            }
+        }
+    }
 }

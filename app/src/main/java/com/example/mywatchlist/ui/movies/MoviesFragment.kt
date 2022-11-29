@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMoviesBinding
-import com.example.mywatchlist.databinding.FragmentSearchBinding
 import com.example.mywatchlist.ui.Utils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +21,7 @@ private const val TAG = "MoviesFragment"
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
-    private val viewModel: MoviesViewModel by viewModels()
+    private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var binding: FragmentMoviesBinding
 
     override fun onCreateView(
@@ -82,7 +81,8 @@ class MoviesFragment : Fragment() {
             }
         }
         binding.searchMovies.setOnClickListener {
-            findNavController().navigate(MoviesFragmentDirections.actionMoviesFragmentToSearchFragment())
+            val action = MoviesFragmentDirections.actionMoviesFragmentToSearchFragment()
+            findNavController().navigate(action)
         }
 
         viewModel.movies.observe(viewLifecycleOwner) { list ->
@@ -109,9 +109,6 @@ class MoviesFragment : Fragment() {
                         else -> {}          // TODO: yet to be implemented
                     }
                 }
-
         }
-
-
     }
 }
