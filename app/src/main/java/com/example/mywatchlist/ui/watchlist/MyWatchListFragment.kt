@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentWatchlistBinding
 import com.example.mywatchlist.ui.Utils
 import com.google.android.material.snackbar.Snackbar
@@ -43,6 +46,18 @@ class MyWatchListFragment : Fragment() {
                         findNavController().navigate(navigationAction)
                     }
                 }
+            }
+            binding.clearWatchlist.setOnClickListener {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setMessage(R.string.clear_all)
+                alertDialog.setCancelable(false)
+                alertDialog.setPositiveButton(android.R.string.yes){ _,_ ->
+                    viewModel.clearAll()
+                }
+                alertDialog.setNegativeButton(android.R.string.cancel){dialog,_ ->
+                    dialog.cancel()
+                }
+                alertDialog.show()
             }
         }
     }

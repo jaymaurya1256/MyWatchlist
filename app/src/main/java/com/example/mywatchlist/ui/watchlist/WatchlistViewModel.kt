@@ -18,5 +18,9 @@ class WatchlistViewModel @Inject constructor(val db: WatchlistDao, val api: Movi
             db.removeFromList(id)
         }
     }
-
+    fun clearAll(){
+        viewModelScope.launch {
+            db.clearList()
+        }
+    }
 }
