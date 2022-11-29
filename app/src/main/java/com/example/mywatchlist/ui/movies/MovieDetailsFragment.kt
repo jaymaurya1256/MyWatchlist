@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MovieDetailsFragment"
@@ -63,6 +64,7 @@ class MovieDetailsFragment : Fragment() {
                             movieDetails.poster_path,
                             movieDetails.adult
                         )
+                        Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }

@@ -18,11 +18,31 @@ private const val TAG = "MoviesViewModel"
 class MoviesViewModel @Inject constructor(private val api: MoviesService, private val db: WatchlistDao) : ViewModel(){
     var movies = MutableLiveData<List<Movie>>()
 
-    fun getMoviesFromWeb(){
+    fun getMoviesFromWebTopRated(){
         viewModelScope.launch {
             try {
-                movies.value = api.getMovies().results
+                movies.value = api.getMoviesTopRated().results
                 Log.d(TAG, "getMovies: Success")
+            } catch (e: Exception){
+                Log.d(TAG, "getMovies: ${e.message}")
+            }
+        }
+    }
+    fun getMoviesFromWebNewReleases(){
+        viewModelScope.launch {
+            try {
+                movies.value = api.getMoviesNewReleases().results
+                Log.d(TAG, "getMovies: Success")
+            } catch (e: Exception){
+                Log.d(TAG, "getMoviesError: ${e.message}")
+            }
+        }
+    }
+    fun getMoviesFromWebPopular(){
+        viewModelScope.launch {
+            try {
+                movies.value = api.getMoviesPopular().results
+                Log.d(TAG, "getMovies: Success from popular and the data is ${movies.value}")
             } catch (e: Exception){
                 Log.d(TAG, "getMovies: ${e.message}")
             }

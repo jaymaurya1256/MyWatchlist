@@ -11,7 +11,19 @@ const val API_KEY = "8fa37f97887d4572adc080ab9662e405"
 
 interface MoviesService {
     @GET("movie/top_rated?api_key=$API_KEY")
-    suspend fun getMovies(): MoviesResponse
+    suspend fun getMoviesTopRated(): MoviesResponse
+
+    @GET("trending/{media_type}/{time_window}")
+    suspend fun getMoviesPopular(
+        @Path("media_type") mediaType: String = "movie",
+        @Path("time_window") timeWindow:String = "day",
+        @Query("api_key") apiKey : String = API_KEY
+    ) : MoviesResponse
+
+    @GET("movie/upcoming")
+    suspend fun getMoviesNewReleases(
+        @Query("api_key") apiKey: String = API_KEY
+    ): MoviesResponse
 
     @GET("discover/movie")
     suspend fun getMoviesGenre(

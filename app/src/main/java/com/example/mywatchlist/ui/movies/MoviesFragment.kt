@@ -35,7 +35,7 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMoviesFromWeb()
+        viewModel.getMoviesFromWebTopRated()
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.listFilterIcon.setOnClickListener {
             val popupMenu = PopupMenu(this.requireContext(), binding.listFilterIcon)
@@ -73,7 +73,15 @@ class MoviesFragment : Fragment() {
                         true
                     }
                     R.id.top_filter -> {
-                        viewModel.getMoviesFromWeb()
+                        viewModel.getMoviesFromWebTopRated()
+                        true
+                    }
+                    R.id.new_releases_filter -> {
+                        viewModel.getMoviesFromWebNewReleases()
+                        true
+                    }
+                    R.id.popular_filter -> {
+                        viewModel.getMoviesFromWebPopular()
                         true
                     }
                     else -> {true}
