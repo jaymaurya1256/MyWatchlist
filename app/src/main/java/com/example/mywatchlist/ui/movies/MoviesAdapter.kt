@@ -37,6 +37,7 @@ class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, St
                 placeholder(R.drawable.place_holder_image)
                 crossfade(true)
                 crossfade(1000)
+                error(R.drawable.image_load_error)
             }
             movieName.text = movie.title
             description.text = movie.overview
@@ -54,11 +55,11 @@ class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, St
             popupMenu.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.addToWatchlistMenuItem -> {
-                        onClick(movie.id, movie.title, movie.overview, movie.poster_path,movie.adult, Utils.ADDTOWATCHLIST)
+                        onClick(movie.id, movie.title!!, movie.overview!!, movie.poster_path!!,movie.adult!!, Utils.ADDTOWATCHLIST)
                         true
                     }
                     R.id.goToDescriptionMenuItem -> {
-                        onClick(movie.id, movie.title, movie.overview, movie.poster_path,movie.adult, Utils.GOTODESCRIPTION)
+                        onClick(movie.id, movie.title!!, movie.overview!!, movie.poster_path!!,movie.adult!!, Utils.GOTODESCRIPTION)
                         true
                     }
                     R.id.visitWebMenuItem -> true

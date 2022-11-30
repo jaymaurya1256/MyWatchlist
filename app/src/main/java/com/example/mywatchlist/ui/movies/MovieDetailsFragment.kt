@@ -52,6 +52,7 @@ class MovieDetailsFragment : Fragment() {
                         crossfade(true)
                         crossfade(1000)
                         placeholder(R.drawable.place_holder_image)
+                        error(R.drawable.image_load_error)
                     }
 
                     visitWebFragmentDetail.setOnClickListener {} // TODO: add functionality for web visit
