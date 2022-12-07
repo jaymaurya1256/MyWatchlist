@@ -9,12 +9,16 @@ import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.movieslist.Movie
+import com.example.mywatchlist.network.entity.movieslist.MoviesResponse
 import com.example.mywatchlist.ui.Utils
 
 private const val TAG = "MoviesAdapter"
 
 
-class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, String, String, String, Boolean, Utils) -> Unit): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+class MoviesAdapter(private val listOfMovies: List<Movie>,
+                    val nextPage: () -> Unit,
+                    val onClick: (Int, String, String, String, Boolean, Utils) -> Unit
+                    ): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
     class ItemViewHolder(val binding: ListItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
         val title = binding.movieName
         val summary = binding.description
@@ -32,6 +36,9 @@ class MoviesAdapter(private val listOfMovies: List<Movie>, val onClick: (Int, St
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val movie = listOfMovies[position]
+        if (position > listOfMovies.size - 6) {
+            nextPage()
+        }
         with(holder.binding) {
             image.load(BASE_URL_FOR_IMAGE+movie.poster_path){
                 placeholder(R.drawable.place_holder_image)
