@@ -1,7 +1,6 @@
 package com.example.mywatchlist.ui.movies
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,7 @@ import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.network.api.MoviesService
 import com.example.mywatchlist.network.entity.movieslist.Movie
-import com.example.mywatchlist.ui.ListOfMoviesByCategories
+import com.example.mywatchlist.ui.Filters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -21,53 +20,62 @@ class MoviesViewModel @Inject constructor(
     private val api: MoviesService,
     private val db: WatchlistDao,
 ) : ViewModel() {
-    val listOfMoviesByCategories = ListOfMoviesByCategories()
     var movies = MutableLiveData<List<Movie>>()
-    val page = MutableLiveData(1)
+    private var page = 0
 
-    fun getMoviesFromWebTopRated() {
-        viewModelScope.launch {
-            try {
-                movies.value = api.getMoviesTopRated(page.value!!).results
-                Log.d(TAG, "getMovies: Success ${movies.value}")
-            } catch (e: Exception) {
-                Log.d(TAG, "getMovies: ${e.message}")
+    var currentFilter = Filters.TOP_RATED
+        set(value) {
+            if (field != value) {
+                field = value
+                page = 0
+                movies.value = emptyList()
+                getMovies(value)
             }
+            field = value
         }
+
+    init {
+        getMovies(currentFilter)
     }
 
-    fun getMoviesFromWebNewReleases() {
-        viewModelScope.launch {
-            try {
-                movies.value = api.getMoviesNewReleases(page.value!!).results
-                Log.d(TAG, "getMovies: NewSuccess ${movies.value}")
-            } catch (e: Exception) {
-                Log.d(TAG, "getMoviesError: ${e.message}")
-            }
-        }
+    fun getMoreMovies() {
+        getMovies(currentFilter, true)
     }
 
-    fun getMoviesFromWebPopular() {
+    private fun getMovies(filter: Filters, paging: Boolean = false) {
         viewModelScope.launch {
-            try {
-                movies.value = api.getMoviesPopular(page.value!!).results
-                Log.d(TAG, "getMovies: Success from popular and the data is ${movies.value}")
-            } catch (e: Exception) {
-                Log.d(TAG, "getMovies: ${e.message}")
-            }
-        }
-    }
+            movies.value = when (filter) {
+                Filters.TOP_RATED -> {
+                    if (paging) movies.value?.plus(api.getMoviesTopRated(++page).results) else api.getMoviesTopRated(++page).results
+                }
+                Filters.NEW_RELEASES -> {
+                    if (paging) movies.value?.plus(api.getMoviesNewReleases(++page).results) else api.getMoviesNewReleases(++page).results
+                }
+                Filters.POPULAR -> {
+                    if (paging) movies.value?.plus(api.getMoviesPopular(++page).results) else api.getMoviesPopular(++page).results
+                }
+                Filters.CRIME -> {
+                    if (paging) movies.value?.plus(api.getMoviesGenre(80, ++page).results) else api.getMoviesGenre(80, ++page).results
+                }
+                Filters.DRAMA -> {
+                    if (paging) movies.value?.plus(api.getMoviesGenre(18, ++page).results) else api.getMoviesGenre(18, ++page).results
+                }
+                Filters.COMEDY -> {
+                    if (paging) movies.value?.plus(api.getMoviesGenre(35, ++page).results) else api.getMoviesGenre(35, ++page).results
+                }
+                Filters.ACTION -> {
+                    if (paging) movies.value?.plus(api.getMoviesGenre(28, ++page).results) else api.getMoviesGenre(28, ++page).results
+                }
+                Filters.SUSPENSE -> {
+                    if (paging) movies.value?.plus(api.getMoviesGenre(9648, ++page).results) else api.getMoviesGenre(9648, ++page).results
+                }
+                Filters.THRILLER -> {
+                    if (paging) movies.value?.plus(api.getMoviesGenre(53, ++page).results) else api.getMoviesGenre(53, ++page).results
+                }
+                Filters.HORROR -> {
+                    if (paging) movies.value?.plus(api.getMoviesGenre(27, ++page).results) else api.getMoviesGenre(27, ++page).results
+                }
 
-    fun getMoviesFromWebGenre(genreId: Int) {
-        viewModelScope.launch {
-            try {
-                movies.value = api.getMoviesGenre(genreId, page.value!!).results
-                Log.d(
-                    TAG,
-                    "getMovies: Success from lifecycle scope and the contents are: ${movies.value}"
-                )
-            } catch (e: Exception) {
-                Log.d(TAG, "getMovies: ${e.message}")
             }
         }
     }
@@ -89,7 +97,7 @@ class MoviesViewModel @Inject constructor(
     fun searchMovies(keyword: String) {
         viewModelScope.launch {
             try {
-                movies.value = api.searchMovie(keyword, page.value!!).results
+                movies.value = api.searchMovie(keyword, 1).results
                 Log.d(TAG, "searchMovies: Success with result ${movies.value}")
             } catch (e: Exception) {
                 Log.d(TAG, "searchMovies: $e")

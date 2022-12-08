@@ -8,10 +8,10 @@ import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.ListItemWatchlistBinding
-import com.example.mywatchlist.ui.Utils
+import com.example.mywatchlist.ui.Actions
 import com.example.mywatchlist.ui.movies.BASE_URL_FOR_IMAGE
 
-class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, Utils) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
+class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, Actions) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
     class ItemViewHolderWatchlist(val binding: ListItemWatchlistBinding): RecyclerView.ViewHolder(binding.root){
         val title = binding.movieNameWatchlist
         val detail = binding.descriptionWatchlist
@@ -50,11 +50,11 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
             popupMenu.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.removeFromListMenuItem -> {
-                        onClick(movie.id, Utils.REMOVE)
+                        onClick(movie.id, Actions.REMOVE)
                         true
                     }
                     R.id.goToDescriptionFromWatchlistMenuItem -> {
-                        onClick(movie.id, Utils.GOTODESCRIPTION)
+                        onClick(movie.id, Actions.GO_TO_DESCRIPTION)
                         true
                     }
                     else -> true

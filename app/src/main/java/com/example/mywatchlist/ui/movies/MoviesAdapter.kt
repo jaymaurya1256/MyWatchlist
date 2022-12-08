@@ -10,9 +10,7 @@ import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.movieslist.Movie
-import com.example.mywatchlist.network.entity.movieslist.MoviesResponse
-import com.example.mywatchlist.ui.Utils
-import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.example.mywatchlist.ui.Actions
 
 private const val TAG = "MoviesAdapter"
 
@@ -20,7 +18,7 @@ private const val TAG = "MoviesAdapter"
 class MoviesAdapter(
     private val listOfMovies: List<Movie>,
     val nextPage: () -> Unit,
-    val onClick: (Int, String, String, String, Boolean, Utils) -> Unit,
+    val onClick: (Int, String, String, String, Boolean, Actions) -> Unit,
 ) : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
     class ItemViewHolder(val binding: ListItemMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -57,7 +55,7 @@ class MoviesAdapter(
         }
         holder.binding.root.setOnClickListener {
             Log.d(TAG, "onBindViewHolder: onclick called")
-            onClick(movie.id, "", "", "", false, Utils.GOTODESCRIPTION)
+            onClick(movie.id, "", "", "", false, Actions.GO_TO_DESCRIPTION)
             Log.d(TAG, "onBindViewHolder: onclick completed")
         }
         holder.binding.root.setOnLongClickListener {
@@ -74,7 +72,7 @@ class MoviesAdapter(
                             movie.overview!!,
                             movie.poster_path!!,
                             movie.adult!!,
-                            Utils.ADDTOWATCHLIST
+                            Actions.ADD_TO_WATCHLIST
                         )
                         true
                     }
@@ -86,7 +84,7 @@ class MoviesAdapter(
                             movie.overview!!,
                             movie.poster_path!!,
                             movie.adult!!,
-                            Utils.GOTODESCRIPTION
+                            Actions.GO_TO_DESCRIPTION
                         )
                         true
                     }
