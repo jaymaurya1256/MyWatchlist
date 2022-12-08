@@ -39,7 +39,7 @@ class MoviesViewModel @Inject constructor(
     fun getMoviesFromWebNewReleases() {
         viewModelScope.launch {
             try {
-                movies.value?.plus(api.getMoviesNewReleases(page.value!!).results)
+                movies.value = api.getMoviesNewReleases(page.value!!).results
                 Log.d(TAG, "getMovies: NewSuccess ${movies.value}")
             } catch (e: Exception) {
                 Log.d(TAG, "getMoviesError: ${e.message}")
@@ -50,7 +50,7 @@ class MoviesViewModel @Inject constructor(
     fun getMoviesFromWebPopular() {
         viewModelScope.launch {
             try {
-                movies.value?.plus(api.getMoviesPopular(page.value!!).results)
+                movies.value = api.getMoviesPopular(page.value!!).results
                 Log.d(TAG, "getMovies: Success from popular and the data is ${movies.value}")
             } catch (e: Exception) {
                 Log.d(TAG, "getMovies: ${e.message}")
@@ -61,7 +61,7 @@ class MoviesViewModel @Inject constructor(
     fun getMoviesFromWebGenre(genreId: Int) {
         viewModelScope.launch {
             try {
-                movies.value?.plus(api.getMoviesGenre(genreId, page.value!!).results)
+                movies.value = api.getMoviesGenre(genreId, page.value!!).results
                 Log.d(
                     TAG,
                     "getMovies: Success from lifecycle scope and the contents are: ${movies.value}"
