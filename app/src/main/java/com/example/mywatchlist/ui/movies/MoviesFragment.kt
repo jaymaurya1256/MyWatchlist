@@ -66,7 +66,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             crimeMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebGenre(80)
                         true
                     }
@@ -75,7 +75,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             dramaMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebGenre(18)
                         true
                     }
@@ -84,7 +84,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             comedyMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebGenre(35)
                         true
                     }
@@ -93,7 +93,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             actionMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         Log.d(TAG, "onViewCreated: Click detected in action button")
                         viewModel.getMoviesFromWebGenre(28)
                         true
@@ -103,7 +103,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             suspenseMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebGenre(9648)
                         true
                     }
@@ -112,7 +112,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             thrillerMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebGenre(53)
                         true
                     }
@@ -121,7 +121,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             horrorMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebGenre(27)
                         true
                     }
@@ -130,7 +130,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             topMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebTopRated()
                         true
                     }
@@ -139,7 +139,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             newMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebNewReleases()
                         true
                     }
@@ -148,7 +148,7 @@ class MoviesFragment : Fragment() {
                             setEachToFalse()
                             popularMovies = true
                         }
-                        viewModel.page.value = 0
+                        viewModel.page.value = 1
                         viewModel.getMoviesFromWebPopular()
                         true
                     }
