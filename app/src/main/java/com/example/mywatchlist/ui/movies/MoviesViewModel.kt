@@ -11,6 +11,7 @@ import com.example.mywatchlist.network.entity.movieslist.Movie
 import com.example.mywatchlist.ui.Filters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 private const val TAG = "MoviesViewModel"
@@ -22,6 +23,8 @@ class MoviesViewModel @Inject constructor(
 ) : ViewModel() {
     var movies = MutableLiveData<List<Movie>>()
     private var page = 0
+
+    var networkJob: Job? = null
 
     var currentFilter = Filters.TOP_RATED
         set(value) {
@@ -39,43 +42,52 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun getMoreMovies() {
-        getMovies(currentFilter, true)
+        if (networkJob == null) {
+            Log.d(TAG, "getMoreMovies: Attempting to fetch more movies, current filter: $currentFilter")
+            getMovies(currentFilter, true)
+        }
     }
 
     private fun getMovies(filter: Filters, paging: Boolean = false) {
-        viewModelScope.launch {
-            movies.value = when (filter) {
-                Filters.TOP_RATED -> {
-                    if (paging) movies.value?.plus(api.getMoviesTopRated(++page).results) else api.getMoviesTopRated(++page).results
+        networkJob = viewModelScope.launch {
+            try {
+                movies.value = when (filter) {
+                    Filters.TOP_RATED -> {
+                        if (paging) movies.value?.plus(api.getMoviesTopRated(++page).results) else api.getMoviesTopRated(++page).results
+                    }
+                    Filters.NEW_RELEASES -> {
+                        if (paging) movies.value?.plus(api.getMoviesNewReleases(++page).results) else api.getMoviesNewReleases(++page).results
+                    }
+                    Filters.POPULAR -> {
+                        if (paging) movies.value?.plus(api.getMoviesPopular(++page).results) else api.getMoviesPopular(++page).results
+                    }
+                    Filters.CRIME -> {
+                        if (paging) movies.value?.plus(api.getMoviesGenre(80, ++page).results) else api.getMoviesGenre(80, ++page).results
+                    }
+                    Filters.DRAMA -> {
+                        if (paging) movies.value?.plus(api.getMoviesGenre(18, ++page).results) else api.getMoviesGenre(18, ++page).results
+                    }
+                    Filters.COMEDY -> {
+                        if (paging) movies.value?.plus(api.getMoviesGenre(35, ++page).results) else api.getMoviesGenre(35, ++page).results
+                    }
+                    Filters.ACTION -> {
+                        if (paging) movies.value?.plus(api.getMoviesGenre(28, ++page).results) else api.getMoviesGenre(28, ++page).results
+                    }
+                    Filters.SUSPENSE -> {
+                        if (paging) movies.value?.plus(api.getMoviesGenre(9648, ++page).results) else api.getMoviesGenre(9648, ++page).results
+                    }
+                    Filters.THRILLER -> {
+                        if (paging) movies.value?.plus(api.getMoviesGenre(53, ++page).results) else api.getMoviesGenre(53, ++page).results
+                    }
+                    Filters.HORROR -> {
+                        if (paging) movies.value?.plus(api.getMoviesGenre(27, ++page).results) else api.getMoviesGenre(27, ++page).results
+                    }
                 }
-                Filters.NEW_RELEASES -> {
-                    if (paging) movies.value?.plus(api.getMoviesNewReleases(++page).results) else api.getMoviesNewReleases(++page).results
-                }
-                Filters.POPULAR -> {
-                    if (paging) movies.value?.plus(api.getMoviesPopular(++page).results) else api.getMoviesPopular(++page).results
-                }
-                Filters.CRIME -> {
-                    if (paging) movies.value?.plus(api.getMoviesGenre(80, ++page).results) else api.getMoviesGenre(80, ++page).results
-                }
-                Filters.DRAMA -> {
-                    if (paging) movies.value?.plus(api.getMoviesGenre(18, ++page).results) else api.getMoviesGenre(18, ++page).results
-                }
-                Filters.COMEDY -> {
-                    if (paging) movies.value?.plus(api.getMoviesGenre(35, ++page).results) else api.getMoviesGenre(35, ++page).results
-                }
-                Filters.ACTION -> {
-                    if (paging) movies.value?.plus(api.getMoviesGenre(28, ++page).results) else api.getMoviesGenre(28, ++page).results
-                }
-                Filters.SUSPENSE -> {
-                    if (paging) movies.value?.plus(api.getMoviesGenre(9648, ++page).results) else api.getMoviesGenre(9648, ++page).results
-                }
-                Filters.THRILLER -> {
-                    if (paging) movies.value?.plus(api.getMoviesGenre(53, ++page).results) else api.getMoviesGenre(53, ++page).results
-                }
-                Filters.HORROR -> {
-                    if (paging) movies.value?.plus(api.getMoviesGenre(27, ++page).results) else api.getMoviesGenre(27, ++page).results
-                }
-
+            } catch (e: Exception) {
+                Log.d(TAG, "getMovies: Error fetching movies: ${e.message}")
+                e.printStackTrace()
+            } finally {
+                networkJob = null
             }
         }
     }

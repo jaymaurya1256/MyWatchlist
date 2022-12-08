@@ -4,6 +4,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
@@ -15,11 +17,21 @@ import com.example.mywatchlist.ui.Actions
 private const val TAG = "MoviesAdapter"
 
 
+class MoviesDiff : DiffUtil.ItemCallback<Movie>() {
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem == newItem
+    }
+}
+
+
 class MoviesAdapter(
-    private val listOfMovies: List<Movie>,
     val nextPage: () -> Unit,
     val onClick: (Int, String, String, String, Boolean, Actions) -> Unit,
-) : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+) : ListAdapter<Movie, MoviesAdapter.ItemViewHolder>(MoviesDiff()) {
     class ItemViewHolder(val binding: ListItemMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val title = binding.movieName
@@ -35,8 +47,8 @@ class MoviesAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val movie = listOfMovies[position]
-        if (position > listOfMovies.size - 6) {
+        val movie = getItem(position)
+        if (position > currentList.size - 6) {
             nextPage()
         }
         with(holder.binding) {
@@ -98,9 +110,5 @@ class MoviesAdapter(
             true
         }
 
-    }
-
-    override fun getItemCount(): Int {
-        return listOfMovies.size
     }
 }

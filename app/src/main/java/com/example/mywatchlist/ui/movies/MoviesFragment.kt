@@ -37,6 +37,47 @@ class MoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(), 2)
 
+        val adapter = MoviesAdapter(nextPage = { viewModel.getMoreMovies() }) { movieId, title, description, image, isActive, action ->
+            when (action) {
+                Actions.GO_TO_DESCRIPTION -> {
+                    val navigationAction =
+                        MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
+                            movieId
+                        )
+                    findNavController().navigate(navigationAction)
+                }
+
+                Actions.ADD_TO_WATCHLIST -> {
+                    try {
+                        viewModel.addMovieToWatchlist(
+                            movieId,
+                            title,
+                            description,
+                            image,
+                            isActive
+                        )
+                        Snackbar.make(
+                            binding.root,
+                            "Movie added to Watchlist",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        Snackbar.make(
+                            binding.root,
+                            "Something went wrong: $e",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                else -> {
+                    // TODO: yet to be implemented
+                }
+            }
+        }
+
+        binding.recyclerViewMovies.adapter = adapter
+
         binding.listFilterIcon.setOnClickListener {
             val popupMenu = PopupMenu(this.requireContext(), binding.listFilterIcon)
             popupMenu.menuInflater.inflate(R.menu.filter_menu, popupMenu.menu)
@@ -96,47 +137,7 @@ class MoviesFragment : Fragment() {
         }
 
         viewModel.movies.observe(viewLifecycleOwner) { list ->
-            binding.recyclerViewMovies.adapter = MoviesAdapter(
-                list,
-                nextPage = { viewModel.getMoreMovies() },
-            ) { movieId, title, description, image, isActive, action ->
-                when (action) {
-                    Actions.GO_TO_DESCRIPTION -> {
-                        val navigationAction =
-                            MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
-                                movieId
-                            )
-                        findNavController().navigate(navigationAction)
-                    }
-
-                    Actions.ADD_TO_WATCHLIST -> {
-                        try {
-                            viewModel.addMovieToWatchlist(
-                                movieId,
-                                title,
-                                description,
-                                image,
-                                isActive
-                            )
-                            Snackbar.make(
-                                binding.root,
-                                "Movie added to Watchlist",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        } catch (e: Exception) {
-                            Snackbar.make(
-                                binding.root,
-                                "Something went wrong: $e",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-
-                    else -> {
-                        // TODO: yet to be implemented
-                    }
-                }
-            }
+            adapter.submitList(list)
         }
     }
 }
