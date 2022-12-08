@@ -5,21 +5,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.movieslist.Movie
 import com.example.mywatchlist.network.entity.movieslist.MoviesResponse
 import com.example.mywatchlist.ui.Utils
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 private const val TAG = "MoviesAdapter"
 
 
-class MoviesAdapter(private val listOfMovies: List<Movie>,
-                    val nextPage: () -> Unit,
-                    val onClick: (Int, String, String, String, Boolean, Utils) -> Unit
-                    ): RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
-    class ItemViewHolder(val binding: ListItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
+class MoviesAdapter(
+    private val listOfMovies: List<Movie>,
+    val nextPage: () -> Unit,
+    val onClick: (Int, String, String, String, Boolean, Utils) -> Unit,
+) : RecyclerView.Adapter<MoviesAdapter.ItemViewHolder>() {
+    class ItemViewHolder(val binding: ListItemMoviesBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val title = binding.movieName
         val summary = binding.description
         val image = binding.image
@@ -27,9 +31,7 @@ class MoviesAdapter(private val listOfMovies: List<Movie>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding = ListItemMoviesBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            LayoutInflater.from(parent.context), parent, false
         )
         return ItemViewHolder(binding)
     }
@@ -40,8 +42,12 @@ class MoviesAdapter(private val listOfMovies: List<Movie>,
             nextPage()
         }
         with(holder.binding) {
-            image.load(BASE_URL_FOR_IMAGE+movie.poster_path){
-                placeholder(R.drawable.place_holder_image)
+            image.load(BASE_URL_FOR_IMAGE + movie.poster_path) {
+                placeholder(CircularProgressDrawable(holder.binding.root.context).apply {
+                    strokeWidth = 5f
+                    centerRadius = 30f
+                    start()
+                })
                 crossfade(true)
                 crossfade(1000)
                 error(R.drawable.image_load_error)
@@ -51,7 +57,7 @@ class MoviesAdapter(private val listOfMovies: List<Movie>,
         }
         holder.binding.root.setOnClickListener {
             Log.d(TAG, "onBindViewHolder: onclick called")
-            onClick(movie.id,"","","",false,Utils.GOTODESCRIPTION)
+            onClick(movie.id, "", "", "", false, Utils.GOTODESCRIPTION)
             Log.d(TAG, "onBindViewHolder: onclick completed")
         }
         holder.binding.root.setOnLongClickListener {
@@ -60,17 +66,35 @@ class MoviesAdapter(private val listOfMovies: List<Movie>,
             popupMenu.menuInflater.inflate(R.menu.menu_movie_fragment, popupMenu.menu)
             popupMenu.show()
             popupMenu.setOnMenuItemClickListener {
-                when(it.itemId){
+                when (it.itemId) {
                     R.id.addToWatchlistMenuItem -> {
-                        onClick(movie.id, movie.title!!, movie.overview!!, movie.poster_path!!,movie.adult!!, Utils.ADDTOWATCHLIST)
+                        onClick(
+                            movie.id,
+                            movie.title!!,
+                            movie.overview!!,
+                            movie.poster_path!!,
+                            movie.adult!!,
+                            Utils.ADDTOWATCHLIST
+                        )
                         true
                     }
+
                     R.id.goToDescriptionMenuItem -> {
-                        onClick(movie.id, movie.title!!, movie.overview!!, movie.poster_path!!,movie.adult!!, Utils.GOTODESCRIPTION)
+                        onClick(
+                            movie.id,
+                            movie.title!!,
+                            movie.overview!!,
+                            movie.poster_path!!,
+                            movie.adult!!,
+                            Utils.GOTODESCRIPTION
+                        )
                         true
                     }
+
                     R.id.visitWebMenuItem -> true
-                    else -> {true}
+                    else -> {
+                        true
+                    }
                 }
             }
             true

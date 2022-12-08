@@ -82,6 +82,8 @@ dependencies {
     //coil
     implementation("io.coil-kt:coil:2.2.2")
 
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
 }
 
 kapt {
