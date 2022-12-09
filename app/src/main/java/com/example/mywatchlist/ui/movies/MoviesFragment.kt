@@ -1,5 +1,7 @@
 package com.example.mywatchlist.ui.movies
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -70,9 +72,15 @@ class MoviesFragment : Fragment() {
                     }
                 }
 
-                else -> {
-                    // TODO: yet to be implemented
+                Actions.VISIT_WEB -> {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/movie/$movieId"))
+                        startActivity(intent)
+                    }catch (e: Exception){
+                        Log.d(TAG, "onViewCreated: e")
+                    }
                 }
+                else -> {}
             }
         }
 

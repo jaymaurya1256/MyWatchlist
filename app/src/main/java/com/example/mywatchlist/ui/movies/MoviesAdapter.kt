@@ -93,6 +93,19 @@ class MoviesAdapter(
                             )
                             true
                         }
+
+                        R.id.visitWebMenuItem -> {
+                            onClick(
+                                movie.id,
+                                movie.title!!,
+                                movie.overview!!,
+                                movie.poster_path!!,
+                                movie.adult!!,
+                                Actions.VISIT_WEB
+                            )
+                            true
+                        }
+
                         else -> {true}
                     }
                 }
@@ -135,7 +148,18 @@ class MoviesAdapter(
                         true
                     }
 
-                    R.id.visitWebMenuItem -> true
+                    R.id.visitWebMenuItem -> {
+                        onClick(
+                            movie.id,
+                            movie.title!!,
+                            movie.overview!!,
+                            movie.poster_path!!,
+                            movie.adult!!,
+                            Actions.VISIT_WEB
+                        )
+                        true
+                    }
+
                     else -> {
                         true
                     }
