@@ -31,6 +31,7 @@
     <string name="clear_all">Are you sure to clear all movies from watchlist?</string>
     <string name="search_for_movies">Search For Movies</string>
     <string name="search">Search</string>
+    <string name="rating">Rating</string>
 
 
 </resources>

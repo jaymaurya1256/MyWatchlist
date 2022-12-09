@@ -18,6 +18,7 @@ import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 
 private const val TAG = "MovieDetailsFragment"
 const val BASE_URL_FOR_IMAGE = "https://www.themoviedb.org/t/p/original"
@@ -61,6 +62,7 @@ class MovieDetailsFragment : Fragment() {
                         })
                         error(R.drawable.image_load_error)
                     }
+                    audienceRating.text = getString(R.string.rating)+": " + movieDetails.vote_average.toString()
 
                     visitWebFragmentDetail.setOnClickListener {
                         try {
