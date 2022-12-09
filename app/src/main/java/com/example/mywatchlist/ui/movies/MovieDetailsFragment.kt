@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
@@ -51,21 +52,29 @@ class MovieDetailsFragment : Fragment() {
                     movieImage.load(BASE_URL_FOR_IMAGE+movieDetails.poster_path){
                         crossfade(true)
                         crossfade(1000)
-                        placeholder(R.drawable.place_holder_image)
+                        placeholder(CircularProgressDrawable(requireContext()).apply {
+                            strokeWidth = 5f
+                            centerRadius = 30f
+                            start()
+                        })
                         error(R.drawable.image_load_error)
                     }
 
                     visitWebFragmentDetail.setOnClickListener {} // TODO: add functionality for web visit
 
                     addToWatchlistFragmentDetail.setOnClickListener {
-                        viewModel.addToWatchlist(
-                            movieDetails.id,
-                            movieDetails.title,
-                            movieDetails.overview,
-                            movieDetails.poster_path,
-                            movieDetails.adult
-                        )
-                        Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
+                        try {
+                            viewModel.addToWatchlist(
+                                movieDetails.id,
+                                movieDetails.title,
+                                movieDetails.overview,
+                                movieDetails.poster_path!!,
+                                movieDetails.adult
+                            )
+                            Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
+                        }catch (e: Exception){
+                            Snackbar.make(binding.root, "Something went wrong (movie cannot be added to watchlist due to insufficient data)", Snackbar.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }

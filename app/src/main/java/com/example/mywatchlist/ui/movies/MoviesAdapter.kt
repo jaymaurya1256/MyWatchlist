@@ -64,6 +64,39 @@ class MoviesAdapter(
             }
             movieName.text = movie.title
             description.text = movie.overview
+            moreOption.setOnClickListener {
+                val popupMenu = PopupMenu(it.context, it)
+                popupMenu.menuInflater.inflate(R.menu.menu_movie_fragment, popupMenu.menu)
+                popupMenu.show()
+                popupMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.addToWatchlistMenuItem -> {
+                            onClick(
+                                movie.id,
+                                movie.title!!,
+                                movie.overview!!,
+                                movie.poster_path!!,
+                                movie.adult!!,
+                                Actions.ADD_TO_WATCHLIST
+                            )
+                            true
+                        }
+
+                        R.id.goToDescriptionMenuItem -> {
+                            onClick(
+                                movie.id,
+                                movie.title!!,
+                                movie.overview!!,
+                                movie.poster_path!!,
+                                movie.adult!!,
+                                Actions.GO_TO_DESCRIPTION
+                            )
+                            true
+                        }
+                        else -> {true}
+                    }
+                }
+            }
         }
         holder.binding.root.setOnClickListener {
             Log.d(TAG, "onBindViewHolder: onclick called")
@@ -72,6 +105,7 @@ class MoviesAdapter(
         }
         holder.binding.root.setOnLongClickListener {
             Log.d(TAG, "onBindViewHolder: long click detected")
+
             val popupMenu = PopupMenu(it.context, it)
             popupMenu.menuInflater.inflate(R.menu.menu_movie_fragment, popupMenu.menu)
             popupMenu.show()

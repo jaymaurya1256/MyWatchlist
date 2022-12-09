@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
@@ -35,7 +36,11 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
             }
             try {
                 imageWatchlist.load(BASE_URL_FOR_IMAGE +movie.image){
-                    placeholder(R.drawable.place_holder_image)
+                    placeholder(CircularProgressDrawable(root.context).apply {
+                        strokeWidth = 5f
+                        centerRadius = 30f
+                        start()
+                    })
                     crossfade(true)
                     crossfade(1000)
                 }
