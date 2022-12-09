@@ -28,7 +28,7 @@
     <string name="thriller_filter">Thriller</string>
     <string name="horror_filter">Horror</string>
     <string name="delete_all">Delete All</string>
-    <string name="clear_all">Clear All</string>
+    <string name="clear_all">Are you sure to clear all movies from watchlist?</string>
     <string name="search_for_movies">Search For Movies</string>
     <string name="search">Search</string>
 

@@ -15,27 +15,37 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 
 const val BASE_URL = "https://api.themoviedb.org/3/"
+
 @Module
 @InstallIn(SingletonComponent::class)
 object Module {
 
     @Provides
     @Singleton
-    fun retrofitInstanceProvider(moshi : Moshi): MoviesService{
-        return Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(BASE_URL)
-            .build()
-            .create(MoviesService::class.java)
-    }
+    fun provideOkHttpClient() =
+        OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }).build()
+
     @Provides
     @Singleton
-    fun dataBaseProvider(@ApplicationContext applicationContext: Context): WatchlistDatabase{
-        return Room.databaseBuilder(applicationContext,
-            WatchlistDatabase::class.java, "watch_list")
-            .build()
+    fun retrofitInstanceProvider(moshi: Moshi, okHttpClient: OkHttpClient): MoviesService {
+        return Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))
+            .baseUrl(BASE_URL).client(okHttpClient).build().create(MoviesService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun dataBaseProvider(@ApplicationContext applicationContext: Context): WatchlistDatabase {
+        return Room.databaseBuilder(
+            applicationContext, WatchlistDatabase::class.java, "watch_list"
+        ).build()
+    }
+
     @Provides
     @Singleton
     fun moshiProvider(): Moshi {
@@ -47,11 +57,4 @@ object Module {
     fun provideDao(db: WatchlistDatabase): WatchlistDao {
         return db.watchlistDao()
     }
-
-//    @Provides
-//    @Singleton
-//    fun watchListViewModel(db: WatchlistDao): WatchlistViewModel{
-//        val viewModel = WatchlistViewModel by viewModels()
-//        return viewModel
-//    }
 }

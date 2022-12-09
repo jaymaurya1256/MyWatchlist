@@ -1,5 +1,7 @@
 package com.example.mywatchlist.ui.movies
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,9 +12,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MovieDetailsFragment"
@@ -50,19 +54,36 @@ class MovieDetailsFragment : Fragment() {
                     movieImage.load(BASE_URL_FOR_IMAGE+movieDetails.poster_path){
                         crossfade(true)
                         crossfade(1000)
-                        placeholder(R.drawable.place_holder_image)
+                        placeholder(CircularProgressDrawable(requireContext()).apply {
+                            strokeWidth = 5f
+                            centerRadius = 30f
+                            start()
+                        })
+                        error(R.drawable.image_load_error)
                     }
 
-                    visitWebFragmentDetail.setOnClickListener {} // TODO: add functionality for web visit
+                    visitWebFragmentDetail.setOnClickListener {
+                        try {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/movie/${movieDetails.id}"))
+                            startActivity(intent)
+                        }catch (e: Exception){
+                            Log.d(TAG, "onViewCreated: e")
+                        }
+                    }
 
                     addToWatchlistFragmentDetail.setOnClickListener {
-                        viewModel.addToWatchlist(
-                            movieDetails.id,
-                            movieDetails.title,
-                            movieDetails.overview,
-                            movieDetails.poster_path,
-                            movieDetails.adult
-                        )
+                        try {
+                            viewModel.addToWatchlist(
+                                movieDetails.id,
+                                movieDetails.title,
+                                movieDetails.overview,
+                                movieDetails.poster_path!!,
+                                movieDetails.adult
+                            )
+                            Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
+                        }catch (e: Exception){
+                            Snackbar.make(binding.root, "Something went wrong (movie cannot be added to watchlist due to insufficient data)", Snackbar.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
