@@ -50,6 +50,9 @@ class MovieDetailsFragment : Fragment() {
                 Log.d(TAG, "onViewCreated: $movieDetails")
                 if (movieDetails != null) {
                     title.text = movieDetails.title
+                    audienceRating.text = getString(R.string.rating)+": " + movieDetails.vote_average.toString().take(4)
+                    releaseDate.text = "Released in: "+ (movieDetails.release_date?.dropLast(6) ?: movieDetails.release_date)
+                    originalLang.text = "Language: "+movieDetails.original_language
                     scrollableDescriptionText.text = movieDetails.overview
                     Log.d(TAG, "onViewCreated: MoviePosterURL is -> ${BASE_URL_FOR_IMAGE+movieDetails.poster_path}")
                     movieImage.load(BASE_URL_FOR_IMAGE+movieDetails.poster_path){
@@ -62,7 +65,7 @@ class MovieDetailsFragment : Fragment() {
                         })
                         error(R.drawable.image_load_error)
                     }
-                    audienceRating.text = getString(R.string.rating)+": " + movieDetails.vote_average.toString()
+
 
                     visitWebFragmentDetail.setOnClickListener {
                         try {
