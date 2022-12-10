@@ -13,6 +13,7 @@ import com.example.mywatchlist.ui.Actions
 import com.example.mywatchlist.ui.movies.BASE_URL_FOR_IMAGE
 
 class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, Actions) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
+
     class ItemViewHolderWatchlist(val binding: ListItemWatchlistBinding): RecyclerView.ViewHolder(binding.root){
         val title = binding.movieNameWatchlist
         val detail = binding.descriptionWatchlist
@@ -47,6 +48,9 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
             }catch (e: Exception){
                 imageWatchlist.load(R.drawable.image_load_error)
             }
+        }
+        holder.binding.root.setOnClickListener {
+            onClick(movie.id, Actions.GO_TO_DESCRIPTION)
         }
         holder.binding.root.setOnLongClickListener {
             val popupMenu = PopupMenu(holder.binding.root.context, holder.binding.root)

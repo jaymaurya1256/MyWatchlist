@@ -18,6 +18,7 @@ import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 
 private const val TAG = "MovieDetailsFragment"
 const val BASE_URL_FOR_IMAGE = "https://www.themoviedb.org/t/p/original"
@@ -49,6 +50,9 @@ class MovieDetailsFragment : Fragment() {
                 Log.d(TAG, "onViewCreated: $movieDetails")
                 if (movieDetails != null) {
                     title.text = movieDetails.title
+                    audienceRating.text = getString(R.string.rating)+": " + movieDetails.vote_average.toString().take(4)
+                    releaseDate.text = "Released in: "+ (movieDetails.release_date?.dropLast(6) ?: movieDetails.release_date)
+                    originalLang.text = "Language: "+movieDetails.original_language
                     scrollableDescriptionText.text = movieDetails.overview
                     Log.d(TAG, "onViewCreated: MoviePosterURL is -> ${BASE_URL_FOR_IMAGE+movieDetails.poster_path}")
                     movieImage.load(BASE_URL_FOR_IMAGE+movieDetails.poster_path){
@@ -61,6 +65,7 @@ class MovieDetailsFragment : Fragment() {
                         })
                         error(R.drawable.image_load_error)
                     }
+
 
                     visitWebFragmentDetail.setOnClickListener {
                         try {
