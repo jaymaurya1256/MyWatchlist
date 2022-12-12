@@ -18,11 +18,21 @@
     <TextView
         android:id="@+id/title"
         android:padding="8dp"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
         android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@id/movieImage"
+        app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/tag_line"
+        android:padding="16dp"
+        android:textStyle="italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent" />
     <TextView
         android:id="@+id/audienceRating"
@@ -33,7 +43,7 @@
         android:ellipsize="end"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"/>
+        app:layout_constraintTop_toBottomOf="@id/tag_line"/>
     <TextView
         android:id="@+id/releaseDate"
         android:layout_width="130dp"
@@ -43,7 +53,7 @@
         android:textAlignment="textStart"
         android:paddingStart="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"/>
+        app:layout_constraintTop_toBottomOf="@id/tag_line"/>
     <TextView
         android:id="@+id/originalLang"
         android:padding="2dp"
@@ -54,7 +64,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@id/audienceRating"
         app:layout_constraintStart_toEndOf="@id/releaseDate"
-        app:layout_constraintTop_toBottomOf="@id/title"/>
+        app:layout_constraintTop_toBottomOf="@id/tag_line"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cast"
