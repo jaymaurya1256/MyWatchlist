@@ -12,6 +12,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.example.mywatchlist.R
@@ -51,6 +54,11 @@ class MovieDetailsFragment : Fragment() {
                 if (movieDetails != null) {
                     title.text = movieDetails.title
                     tagLine.text = movieDetails.tagline
+                    viewModel.getCast(movieDetails.id)
+                    castRecyclerView.layoutManager = GridLayoutManager(requireContext(),1, RecyclerView.HORIZONTAL, false)
+                    viewModel.castList.observe(viewLifecycleOwner) {
+                        castRecyclerView.adapter = it.cast?.let { it1 -> CastAdapter(it1) }
+                    }
                     audienceRating.text = getString(R.string.rating)+": " + movieDetails.vote_average.toString().take(4)
                     releaseDate.text = "Released in: "+ (movieDetails.release_date?.dropLast(6) ?: movieDetails.release_date)
                     originalLang.text = "Language: "+movieDetails.original_language

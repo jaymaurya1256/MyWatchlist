@@ -8,6 +8,7 @@ import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistDatabase
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.network.api.MoviesService
+import com.example.mywatchlist.network.entity.listofcast.ListOfCast
 import com.example.mywatchlist.network.entity.moviedetails.MoviesDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,6 +18,7 @@ private const val TAG = "MovieDetailViewModel"
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(private val db: WatchlistDao, private val api: MoviesService) : ViewModel(){
     var requestedMovie = MutableLiveData<MoviesDetails>()
+    var castList = MutableLiveData<ListOfCast>()
 
     fun getMovieDetails(movieId: Int){
         Log.d(TAG, "getMovieDetails: function called in view model")
@@ -31,6 +33,15 @@ class MovieDetailViewModel @Inject constructor(private val db: WatchlistDao, pri
         }
     }
 
+    fun getCast(movieId: Int) {
+        try {
+            viewModelScope.launch {
+                castList.value = api.getCast(movieId)
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getCast: $e")
+        }
+    }
 
     fun addToWatchlist(id: Int, title: String, description: String, imageURL: String, isAdult: Boolean){
         viewModelScope.launch {
