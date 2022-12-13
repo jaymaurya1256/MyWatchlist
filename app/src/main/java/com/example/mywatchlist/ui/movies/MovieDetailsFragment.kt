@@ -63,6 +63,16 @@ class MovieDetailsFragment : Fragment() {
                     releaseDate.text = "Released in: "+ (movieDetails.release_date?.dropLast(6) ?: movieDetails.release_date)
                     originalLang.text = "Language: "+movieDetails.original_language
                     scrollableDescriptionText.text = movieDetails.overview
+                    var nameOfProductionCompany = "Produced By: "
+                    val listOfStudios = movieDetails.production_companies
+                    if (listOfStudios != null){
+                        for (i in listOfStudios){
+                            nameOfProductionCompany += i.name+"* "
+                        }
+                    }else{
+                        nameOfProductionCompany += "Unknown"
+                    }
+                    studioName.text = nameOfProductionCompany
                     Log.d(TAG, "onViewCreated: MoviePosterURL is -> ${BASE_URL_FOR_IMAGE+movieDetails.poster_path}")
                     movieImage.load(BASE_URL_FOR_IMAGE+movieDetails.poster_path){
                         crossfade(true)

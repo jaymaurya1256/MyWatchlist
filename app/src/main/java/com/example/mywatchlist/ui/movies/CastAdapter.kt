@@ -10,7 +10,7 @@ import com.example.mywatchlist.databinding.ListItemCasteBinding
 import com.example.mywatchlist.network.entity.listofcast.Cast
 
 class CastAdapter(val listOfCast: List<Cast>): RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
-    class CastViewHolder(binding: ListItemCasteBinding):RecyclerView.ViewHolder(binding.root) {
+    class CastViewHolder(val binding: ListItemCasteBinding):RecyclerView.ViewHolder(binding.root) {
         val imageView = binding.imageCast
         var textView = binding.casteName
     }
@@ -23,8 +23,14 @@ class CastAdapter(val listOfCast: List<Cast>): RecyclerView.Adapter<CastAdapter.
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
         holder.textView.text = listOfCast[position].name
         holder.imageView.load("https://www.themoviedb.org/t/p/w300_and_h450_bestv2"+listOfCast[position].profile_path) {
-            placeholder(R.drawable.place_holder_image)
-            error(R.drawable.image_load_error)
+            placeholder(CircularProgressDrawable(holder.binding.root.context).apply {
+                strokeWidth = 5f
+                centerRadius = 30f
+                start()
+            })
+            crossfade(true)
+            crossfade(1000)
+            error(R.drawable.ic_baseline_person_24)
         }
     }
 
