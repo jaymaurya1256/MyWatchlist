@@ -3,12 +3,16 @@ package com.example.mywatchlist.ui.movies
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemCasteBinding
+import com.example.mywatchlist.network.entity.listofcast.Cast
 
-class CastAdapter: RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
-    class CastViewHolder(binding: ListItemCasteBinding):RecyclerView.ViewHolder(binding.root) {
-
+class CastAdapter(val listOfCast: List<Cast>): RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
+    class CastViewHolder(val binding: ListItemCasteBinding):RecyclerView.ViewHolder(binding.root) {
+        val imageView = binding.imageCast
+        var textView = binding.casteName
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
@@ -17,11 +21,21 @@ class CastAdapter: RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.textView.text = listOfCast[position].name
+        holder.imageView.load("https://www.themoviedb.org/t/p/w300_and_h450_bestv2"+listOfCast[position].profile_path) {
+            placeholder(CircularProgressDrawable(holder.binding.root.context).apply {
+                strokeWidth = 5f
+                centerRadius = 30f
+                start()
+            })
+            crossfade(true)
+            crossfade(1000)
+            error(R.drawable.ic_baseline_person_24)
+        }
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return listOfCast.size
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.mywatchlist.network.api
 
 import com.example.mywatchlist.network.entity.genrefilteredmovies.MoviesFilteredByGenres
+import com.example.mywatchlist.network.entity.listofcast.ListOfCast
 import com.example.mywatchlist.network.entity.moviedetails.MoviesDetails
 import com.example.mywatchlist.network.entity.movieslist.MoviesResponse
 import retrofit2.http.GET
@@ -47,4 +48,10 @@ interface MoviesService {
         @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): MoviesResponse
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCast(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): ListOfCast
 }
