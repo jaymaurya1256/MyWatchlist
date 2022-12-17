@@ -68,7 +68,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/castRecyclerView"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="200dp"
         android:orientation="horizontal"
         android:layout_margin="8dp"
@@ -96,13 +96,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:text="Movie Plot:"
-                    android:padding="4dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
-                <TextView
                     android:id="@+id/scrollable_descriptionText"
                     android:padding="8dp"
                     android:layout_width="wrap_content"
@@ -112,7 +105,7 @@
                     android:layout_marginStart="64dp"
                     android:textAlignment="center"
                     android:layout_width="200dp"
-                    android:layout_height="80dp"
+                    android:layout_height="100dp"
                     android:maxLines="3"
                     android:ellipsize="end"/>
             </LinearLayout>

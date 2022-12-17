@@ -42,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:src="@drawable/ic_baseline_search_24"
-        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
