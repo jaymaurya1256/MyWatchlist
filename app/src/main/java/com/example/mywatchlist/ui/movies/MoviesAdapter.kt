@@ -4,6 +4,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,13 +32,11 @@ class MoviesDiff : DiffUtil.ItemCallback<Movie>() {
 
 class MoviesAdapter(
     val nextPage: () -> Unit,
-    val onClick: (Int, String, String, String, Boolean, Actions) -> Unit,
+    val onClick: (Int, String, String, String, Boolean, Actions) -> Unit
 ) : ListAdapter<Movie, MoviesAdapter.ItemViewHolder>(MoviesDiff()) {
     class ItemViewHolder(val binding: ListItemMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val title = binding.movieName
-        val summary = binding.description
-        val image = binding.image
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -62,6 +62,7 @@ class MoviesAdapter(
                 crossfade(1000)
                 error(R.drawable.image_load_error)
             }
+            rating.text = movie.vote_average.toString().take(3)
             movieName.text = movie.title
             description.text = movie.overview
             moreOption.setOnClickListener {
@@ -169,4 +170,5 @@ class MoviesAdapter(
         }
 
     }
+
 }

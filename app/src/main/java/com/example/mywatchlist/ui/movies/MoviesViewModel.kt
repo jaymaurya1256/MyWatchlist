@@ -26,7 +26,7 @@ class MoviesViewModel @Inject constructor(
 
     var networkJob: Job? = null
 
-    var currentFilter = Filters.TOP_RATED
+    var currentFilter = Filters.POPULAR
         set(value) {
             if (field != value) {
                 field = value
@@ -81,6 +81,9 @@ class MoviesViewModel @Inject constructor(
                     }
                     Filters.HORROR -> {
                         if (paging) movies.value?.plus(api.getMoviesGenre(27, ++page).results) else api.getMoviesGenre(27, ++page).results
+                    }
+                    Filters.SEARCH -> {
+                        if (paging) movies.value?.plus(api.searchMovie("", ++page).results) else api.searchMovie("", ++page).results
                     }
                 }
             } catch (e: Exception) {

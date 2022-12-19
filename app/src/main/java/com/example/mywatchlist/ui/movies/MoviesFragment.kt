@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.R
@@ -18,6 +20,7 @@ import com.example.mywatchlist.ui.Actions
 import com.example.mywatchlist.ui.Filters
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
 
 private const val TAG = "MoviesFragment"
 
@@ -25,11 +28,21 @@ private const val TAG = "MoviesFragment"
 class MoviesFragment : Fragment() {
     private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var binding: FragmentMoviesBinding
-
+    val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (viewModel.currentFilter != Filters.POPULAR){
+                viewModel.currentFilter = Filters.POPULAR
+            }else{
+                requireActivity().finish()
+                exitProcess(0)
+            }
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
         // Inflate the layout for this fragment
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         return binding.root
@@ -38,8 +51,7 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(), 2)
-
-        val adapter = MoviesAdapter(nextPage = { viewModel.getMoreMovies() }) { movieId, title, description, image, isActive, action ->
+        val adapter = MoviesAdapter( nextPage = { viewModel.getMoreMovies() }) { movieId, title, description, image, isActive, action ->
             when (action) {
                 Actions.GO_TO_DESCRIPTION -> {
                     val navigationAction =
@@ -145,7 +157,15 @@ class MoviesFragment : Fragment() {
         }
 
         viewModel.movies.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
+            if (list.size == 0){
+                binding.lottieNoResult.visibility = View.VISIBLE
+                binding.recyclerViewMovies.visibility = View.GONE
+            }else{
+                adapter.submitList(list)
+                binding.lottieNoResult.visibility = View.GONE
+                binding.recyclerViewMovies.visibility = View.VISIBLE
+            }
         }
     }
 }
+

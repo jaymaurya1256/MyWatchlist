@@ -45,6 +45,7 @@ class MovieDetailsFragment : Fragment() {
 
         Log.d(TAG, "onViewCreated: ${args.movieId}")
         viewModel.getMovieDetails(args.movieId)
+        viewModel.getSavedMoviesId()
         Log.d(TAG, "onViewCreated: function is called")
         with(binding){
 
@@ -57,7 +58,7 @@ class MovieDetailsFragment : Fragment() {
                     viewModel.getCast(movieDetails.id)
                     castRecyclerView.layoutManager = GridLayoutManager(requireContext(),1, RecyclerView.HORIZONTAL, false)
                     viewModel.castList.observe(viewLifecycleOwner) {
-                        castRecyclerView.adapter = it.cast?.let { it1 -> CastAdapter(it1) }
+                        castRecyclerView.adapter = it.cast?.let { it1 -> CastAdapter(it1.take(10)) }
                     }
                     audienceRating.text = getString(R.string.rating)+": " + movieDetails.vote_average.toString().take(4)
                     releaseDate.text = "Released in: "+ (movieDetails.release_date?.dropLast(6) ?: movieDetails.release_date)
@@ -95,17 +96,26 @@ class MovieDetailsFragment : Fragment() {
                     }
 
                     addToWatchlistFragmentDetail.setOnClickListener {
-                        try {
-                            viewModel.addToWatchlist(
-                                movieDetails.id,
-                                movieDetails.title,
-                                movieDetails.overview,
-                                movieDetails.poster_path!!,
-                                movieDetails.adult
-                            )
-                            Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
-                        }catch (e: Exception){
-                            Snackbar.make(binding.root, "Something went wrong (movie cannot be added to watchlist due to insufficient data)", Snackbar.LENGTH_SHORT).show()
+                        if (movieDetails.id in viewModel.savedMoviesId.value!!)  {
+                            Log.d(TAG, "onViewCreated: Entered the if segment")
+                            viewModel.removeFromWatchlist(movieDetails.id)
+                            addToWatchlistFragmentDetail.setImageResource(R.drawable.ic_baseline_playlist_add_check_24)
+                            Snackbar.make(binding.root, "Movie removed from Watchlist", Snackbar.LENGTH_SHORT).show()
+                        }
+                        else{
+                            try {
+                                viewModel.addToWatchlist(
+                                    movieDetails.id,
+                                    movieDetails.title,
+                                    movieDetails.overview,
+                                    movieDetails.poster_path!!,
+                                    movieDetails.adult
+                                )
+                                addToWatchlistFragmentDetail.setImageResource(R.drawable.ic_baseline_playlist_add_check_24)
+                                Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
+                            }catch (e: Exception){
+                                Snackbar.make(binding.root, "Something went wrong (movie cannot be added to watchlist due to insufficient data)", Snackbar.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }

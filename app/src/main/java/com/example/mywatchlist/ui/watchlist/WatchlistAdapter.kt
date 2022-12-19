@@ -32,9 +32,6 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
         with(holder.binding){
             movieNameWatchlist.text = movie.title
             descriptionWatchlist.text = movie.description
-            if (movie.isAdult) {
-                audienceRating.text = "A"
-            }
             try {
                 imageWatchlist.load(BASE_URL_FOR_IMAGE +movie.image){
                     placeholder(CircularProgressDrawable(root.context).apply {
@@ -47,6 +44,9 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
                 }
             }catch (e: Exception){
                 imageWatchlist.load(R.drawable.image_load_error)
+            }
+            removeFromWatchlist.setOnClickListener {
+                onClick(movie.id, Actions.REMOVE)
             }
         }
         holder.binding.root.setOnClickListener {

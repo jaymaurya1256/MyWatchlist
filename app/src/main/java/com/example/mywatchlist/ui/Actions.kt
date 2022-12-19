@@ -17,5 +17,6 @@ enum class Filters {
     ACTION,
     SUSPENSE,
     THRILLER,
-    HORROR
+    HORROR,
+    SEARCH
 }

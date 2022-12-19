@@ -1,9 +1,7 @@
 package com.example.mywatchlist.ui.movies
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistDatabase
 import com.example.mywatchlist.database.WatchlistTable
@@ -19,6 +17,21 @@ private const val TAG = "MovieDetailViewModel"
 class MovieDetailViewModel @Inject constructor(private val db: WatchlistDao, private val api: MoviesService) : ViewModel(){
     var requestedMovie = MutableLiveData<MoviesDetails>()
     var castList = MutableLiveData<ListOfCast>()
+    var savedMovies = db.getAllMovies()
+    var savedMoviesId = MutableLiveData(listOf(-1))
+    fun getSavedMoviesId() {
+        Log.d(TAG, "getSavedMoviesId: entred the getSavedMoviesId function")
+        viewModelScope.launch {
+            Log.d(TAG, "getSavedMoviesId: entered the lifecycle scope")
+            Log.d(TAG, "getSavedMoviesId: current values of saved movies are :${savedMovies.value}")
+            if (savedMovies.value != null){
+                for (i in savedMovies.value!!){
+                    savedMoviesId.value = savedMoviesId.value?.plus(i.id)
+                }
+            }
+            Log.d(TAG, "current value of saved movies id are :${savedMoviesId.value} ")
+        }
+    }
 
     fun getMovieDetails(movieId: Int){
         Log.d(TAG, "getMovieDetails: function called in view model")
@@ -40,6 +53,12 @@ class MovieDetailViewModel @Inject constructor(private val db: WatchlistDao, pri
             }
         } catch (e: Exception) {
             Log.d(TAG, "getCast: $e")
+        }
+    }
+
+    fun removeFromWatchlist(id: Int) {
+        viewModelScope.launch {
+            db.removeFromList(id)
         }
     }
 

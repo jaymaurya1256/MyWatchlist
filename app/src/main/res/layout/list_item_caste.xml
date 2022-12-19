@@ -23,7 +23,7 @@
             android:padding="4dp"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textAlignment="textStart"
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/imageCast"
             app:layout_constraintStart_toStartOf="@id/imageCast"
             app:layout_constraintEnd_toEndOf="@id/imageCast"/>
