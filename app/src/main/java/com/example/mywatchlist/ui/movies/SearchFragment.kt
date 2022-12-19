@@ -3,22 +3,16 @@ package com.example.mywatchlist.ui.movies
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentSearchBinding
 import com.example.mywatchlist.ui.Filters
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,9 +40,9 @@ class SearchFragment : BottomSheetDialogFragment() {
 
         lifecycleScope.launch {
             delay(200)
-            val viewFocus = requireActivity().currentFocus
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(viewFocus, 0)
+            binding.searchTextField.requestFocus()
+            val inputManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(binding.searchTextField, InputMethodManager.SHOW_FORCED)
         }
 
         binding.searchMovie.setOnClickListener {
@@ -56,8 +50,7 @@ class SearchFragment : BottomSheetDialogFragment() {
             val searchText = binding.searchTextField.text.toString().trim()
             if (searchText != ""){
                 Log.d(TAG, "onViewCreated: searchText contains keyword -> $searchText")
-                val keyword = searchText
-                viewModel.searchMovies(keyword)
+                viewModel.searchMovies(searchText)
                 findNavController().popBackStack()
             }else{
                 binding.searchTextField.error = "Enter the movie to search"
