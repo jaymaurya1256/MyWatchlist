@@ -121,7 +121,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription="@string/contentDescription1" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addToWatchlistFragmentDetail"
+        android:id="@+id/fab_add_to_watchlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

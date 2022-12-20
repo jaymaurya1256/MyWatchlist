@@ -18,5 +18,8 @@ interface WatchlistDao {
     fun getAllMovies(): LiveData<List<WatchlistTable>>
 
     @Query("SELECT * FROM WatchlistTable WHERE id == :id")
-    suspend fun getDetailsForId(id: Int): WatchlistTable?
+    fun getMovie(id: Int): LiveData<WatchlistTable?>
+
+    @Query("SELECT * FROM WatchlistTable WHERE id == :id")
+    suspend fun getMovieOneShot(id: Int): WatchlistTable?
 }
