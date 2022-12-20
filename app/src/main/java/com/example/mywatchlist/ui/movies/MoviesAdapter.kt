@@ -15,6 +15,7 @@ import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.movieslist.Movie
 import com.example.mywatchlist.util.Actions
+import com.example.mywatchlist.util.toImageUrl
 
 private const val TAG = "MoviesAdapter"
 
@@ -52,7 +53,7 @@ class MoviesAdapter(
             nextPage()
         }
         with(holder.binding) {
-            image.load(BASE_URL_FOR_IMAGE + movie.poster_path) {
+            image.load(movie.poster_path?.toImageUrl()) {
                 placeholder(CircularProgressDrawable(holder.binding.root.context).apply {
                     strokeWidth = 5f
                     centerRadius = 30f

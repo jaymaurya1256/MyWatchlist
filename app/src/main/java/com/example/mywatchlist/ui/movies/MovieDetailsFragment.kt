@@ -23,6 +23,7 @@ import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
+import com.example.mywatchlist.util.toImageUrl
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,7 +31,6 @@ import java.text.DecimalFormat
 import kotlin.properties.Delegates
 
 private const val TAG = "MovieDetailsFragment"
-const val BASE_URL_FOR_IMAGE = "https://www.themoviedb.org/t/p/original"
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
@@ -40,8 +40,8 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
         binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,7 +51,7 @@ class MovieDetailsFragment : Fragment() {
         Log.d(TAG, "onViewCreated: ${args.movieId}")
         viewModel.getMovieDetails(args.movieId)
         Log.d(TAG, "onViewCreated: function is called")
-        with(binding){
+        with(binding) {
 
             viewModel.requestedMovie.observe(viewLifecycleOwner) { movieDetails ->
 
@@ -60,26 +60,33 @@ class MovieDetailsFragment : Fragment() {
                     title.text = movieDetails.title
                     tagLine.text = movieDetails.tagline
                     viewModel.getCast(movieDetails.id)
-                    castRecyclerView.layoutManager = GridLayoutManager(requireContext(),1, RecyclerView.HORIZONTAL, false)
+                    castRecyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
                     viewModel.castList.observe(viewLifecycleOwner) {
                         castRecyclerView.adapter = it.cast?.let { it1 -> CastAdapter(it1.take(10)) }
                     }
-                    audienceRating.text = getString(R.string.rating)+": " + movieDetails.vote_average.toString().take(4)
-                    releaseDate.text = "Released in: "+ (movieDetails.release_date?.dropLast(6) ?: movieDetails.release_date)
-                    originalLang.text = "Language: "+movieDetails.original_language
+                    audienceRating.text =
+                        getString(R.string.rating) + ": " + movieDetails.vote_average.toString()
+                            .take(4)
+                    releaseDate.text = "Released in: " + (movieDetails.release_date?.dropLast(6)
+                        ?: movieDetails.release_date)
+                    originalLang.text = "Language: " + movieDetails.original_language
                     scrollableDescriptionText.text = movieDetails.overview
                     var nameOfProductionCompany = "Produced By: "
                     val listOfStudios = movieDetails.production_companies
-                    if (listOfStudios != null){
-                        for (i in listOfStudios){
-                            nameOfProductionCompany += i.name+"* "
+                    if (listOfStudios != null) {
+                        for (i in listOfStudios) {
+                            nameOfProductionCompany += i.name + "* "
                         }
-                    }else{
+                    } else {
                         nameOfProductionCompany += "Unknown"
                     }
                     studioName.text = nameOfProductionCompany
-                    Log.d(TAG, "onViewCreated: MoviePosterURL is -> ${BASE_URL_FOR_IMAGE+movieDetails.poster_path}")
-                    movieImage.load(BASE_URL_FOR_IMAGE+movieDetails.poster_path){
+                    Log.d(
+                        TAG,
+                        "onViewCreated: MoviePosterURL is -> ${movieDetails.poster_path?.toImageUrl()}"
+                    )
+                    movieImage.load(movieDetails.poster_path?.toImageUrl()) {
                         crossfade(true)
                         crossfade(1000)
                         placeholder(CircularProgressDrawable(requireContext()).apply {
@@ -92,24 +99,30 @@ class MovieDetailsFragment : Fragment() {
 
                     visitWebFragmentDetail.setOnClickListener {
                         try {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/movie/${movieDetails.id}"))
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://www.themoviedb.org/movie/${movieDetails.id}")
+                            )
                             startActivity(intent)
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             Log.d(TAG, "onViewCreated: e")
                         }
                     }
 
                     addToWatchlistFragmentDetail.setOnClickListener {
 
-                        if (movieDetails.id in viewModel.listOfAllIdOfSavedMovies.value!!)  {
+                        if (movieDetails.id in viewModel.listOfAllIdOfSavedMovies.value!!) {
                             Log.d(TAG, "onViewCreated: Entered the if segment")
                             viewModel.removeFromWatchlist(movieDetails.id)
                             Log.d(TAG, "onViewCreated: movie removed from watchlist")
                             addToWatchlistFragmentDetail.setImageResource(R.drawable.ic_baseline_playlist_add_24)
                             Log.d(TAG, "onViewCreated: icon changed")
-                            Snackbar.make(binding.root, "Movie removed from Watchlist", Snackbar.LENGTH_SHORT).show()
-                        }
-                        else{
+                            Snackbar.make(
+                                binding.root,
+                                "Movie removed from Watchlist",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        } else {
                             Log.d(TAG, "onViewCreated: entered else part")
                             try {
                                 Log.d(TAG, "onViewCreated: entered else - try part")
@@ -123,10 +136,18 @@ class MovieDetailsFragment : Fragment() {
                                 Log.d(TAG, "onViewCreated: movie added")
                                 addToWatchlistFragmentDetail.setImageResource(R.drawable.ic_baseline_playlist_add_check_24)
                                 Log.d(TAG, "onViewCreated: icon changed")
-                                Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
+                                Snackbar.make(
+                                    binding.root,
+                                    "Movie added to Watchlist",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
                             } catch (e: Exception) {
                                 Log.d(TAG, "onViewCreated: failed to add to watchlist")
-                                Snackbar.make(binding.root, "Something went wrong (movie cannot be added to watchlist due to insufficient data)", Snackbar.LENGTH_SHORT).show()
+                                Snackbar.make(
+                                    binding.root,
+                                    "Something went wrong (movie cannot be added to watchlist due to insufficient data)",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -135,10 +156,12 @@ class MovieDetailsFragment : Fragment() {
         }
 
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack()
-            }
-        })
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            })
     }
 }

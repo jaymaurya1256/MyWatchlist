@@ -10,7 +10,7 @@ import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.ListItemWatchlistBinding
 import com.example.mywatchlist.util.Actions
-import com.example.mywatchlist.ui.movies.BASE_URL_FOR_IMAGE
+import com.example.mywatchlist.util.toImageUrl
 
 class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, private val onClick: (Int, Actions) -> Unit): RecyclerView.Adapter<WatchlistAdapter.ItemViewHolderWatchlist>() {
 
@@ -33,7 +33,7 @@ class WatchlistAdapter(private val watchListTables: List<WatchlistTable>, privat
             movieNameWatchlist.text = movie.title
             descriptionWatchlist.text = movie.description
             try {
-                imageWatchlist.load(BASE_URL_FOR_IMAGE +movie.image){
+                imageWatchlist.load(movie.image.toImageUrl()){
                     placeholder(CircularProgressDrawable(root.context).apply {
                         strokeWidth = 5f
                         centerRadius = 30f
