@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
@@ -101,46 +102,68 @@ class MoviesFragment : Fragment() {
         binding.listFilterIcon.setOnClickListener {
             val popupMenu = PopupMenu(this.requireContext(), binding.listFilterIcon)
             popupMenu.menuInflater.inflate(R.menu.filter_menu, popupMenu.menu)
+            when(viewModel.currentFilter){
+                Filters.POPULAR ->{popupMenu.menu.findItem(R.id.popular_filter).isChecked = true}
+                Filters.NEW_RELEASES ->{popupMenu.menu.findItem(R.id.new_releases_filter).isChecked = true}
+                Filters.TOP_RATED ->{popupMenu.menu.findItem(R.id.top_filter).isChecked = true}
+                Filters.CRIME ->{popupMenu.menu.findItem(R.id.crime_filter).isChecked = true}
+                Filters.DRAMA ->{ popupMenu.menu.findItem(R.id.drama_filter).isChecked = true }
+                Filters.COMEDY ->{popupMenu.menu.findItem(R.id.comedy_filter).isChecked = true}
+                Filters.ACTION ->{popupMenu.menu.findItem(R.id.action_filter).isChecked = true}
+                Filters.SUSPENSE ->{popupMenu.menu.findItem(R.id.suspense_filter).isChecked = true}
+                Filters.THRILLER ->{popupMenu.menu.findItem(R.id.thriller_filter).isChecked = true}
+                Filters.HORROR ->{popupMenu.menu.findItem(R.id.horror_filter).isChecked = true}
+            }
             popupMenu.show()
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.popular_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.POPULAR
                         true
                     }
                     R.id.top_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.TOP_RATED
                         true
                     }
                     R.id.new_releases_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.NEW_RELEASES
                         true
                     }
                     R.id.crime_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.CRIME
                         true
                     }
                     R.id.comedy_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.COMEDY
                         true
                     }
                     R.id.action_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.ACTION
                         true
                     }
                     R.id.drama_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.DRAMA
                         true
                     }
                     R.id.suspense_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.SUSPENSE
                         true
                     }
                     R.id.thriller_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.THRILLER
                         true
                     }
                     R.id.horror_filter -> {
+                        it.isChecked = true
                         viewModel.currentFilter = Filters.HORROR
                         true
                     }

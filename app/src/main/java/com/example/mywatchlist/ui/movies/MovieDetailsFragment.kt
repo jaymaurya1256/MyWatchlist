@@ -10,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,10 +21,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.example.mywatchlist.R
+import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.FragmentMovieDetailsBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
+import kotlin.properties.Delegates
 
 private const val TAG = "MovieDetailsFragment"
 const val BASE_URL_FOR_IMAGE = "https://www.themoviedb.org/t/p/original"
@@ -42,10 +48,8 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         Log.d(TAG, "onViewCreated: ${args.movieId}")
         viewModel.getMovieDetails(args.movieId)
-        viewModel.getSavedMoviesId()
         Log.d(TAG, "onViewCreated: function is called")
         with(binding){
 
@@ -96,14 +100,19 @@ class MovieDetailsFragment : Fragment() {
                     }
 
                     addToWatchlistFragmentDetail.setOnClickListener {
-                        if (movieDetails.id in viewModel.savedMoviesId.value!!)  {
+
+                        if (movieDetails.id in viewModel.listOfAllIdOfSavedMovies.value!!)  {
                             Log.d(TAG, "onViewCreated: Entered the if segment")
                             viewModel.removeFromWatchlist(movieDetails.id)
-                            addToWatchlistFragmentDetail.setImageResource(R.drawable.ic_baseline_playlist_add_check_24)
+                            Log.d(TAG, "onViewCreated: movie removed from watchlist")
+                            addToWatchlistFragmentDetail.setImageResource(R.drawable.ic_baseline_playlist_add_24)
+                            Log.d(TAG, "onViewCreated: icon changed")
                             Snackbar.make(binding.root, "Movie removed from Watchlist", Snackbar.LENGTH_SHORT).show()
                         }
                         else{
+                            Log.d(TAG, "onViewCreated: entered else part")
                             try {
+                                Log.d(TAG, "onViewCreated: entered else - try part")
                                 viewModel.addToWatchlist(
                                     movieDetails.id,
                                     movieDetails.title,
@@ -111,9 +120,12 @@ class MovieDetailsFragment : Fragment() {
                                     movieDetails.poster_path!!,
                                     movieDetails.adult
                                 )
+                                Log.d(TAG, "onViewCreated: movie added")
                                 addToWatchlistFragmentDetail.setImageResource(R.drawable.ic_baseline_playlist_add_check_24)
+                                Log.d(TAG, "onViewCreated: icon changed")
                                 Snackbar.make(binding.root, "Movie added to Watchlist", Snackbar.LENGTH_SHORT).show()
-                            }catch (e: Exception){
+                            } catch (e: Exception) {
+                                Log.d(TAG, "onViewCreated: failed to add to watchlist")
                                 Snackbar.make(binding.root, "Something went wrong (movie cannot be added to watchlist due to insufficient data)", Snackbar.LENGTH_SHORT).show()
                             }
                         }
