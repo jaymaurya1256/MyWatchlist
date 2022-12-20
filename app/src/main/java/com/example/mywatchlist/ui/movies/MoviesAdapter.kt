@@ -14,7 +14,7 @@ import coil.load
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.ListItemMoviesBinding
 import com.example.mywatchlist.network.entity.movieslist.Movie
-import com.example.mywatchlist.ui.Actions
+import com.example.mywatchlist.util.Actions
 
 private const val TAG = "MoviesAdapter"
 

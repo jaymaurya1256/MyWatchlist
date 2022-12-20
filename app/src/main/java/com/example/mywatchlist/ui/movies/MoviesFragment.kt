@@ -17,8 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.R
 import com.example.mywatchlist.databinding.FragmentMoviesBinding
-import com.example.mywatchlist.ui.Actions
-import com.example.mywatchlist.ui.Filters
+import com.example.mywatchlist.util.Actions
+import com.example.mywatchlist.util.Filters
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mywatchlist.R
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.databinding.FragmentWatchlistBinding
-import com.example.mywatchlist.ui.Actions
+import com.example.mywatchlist.util.Actions
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

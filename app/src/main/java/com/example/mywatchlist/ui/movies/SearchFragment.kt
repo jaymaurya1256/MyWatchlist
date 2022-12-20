@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mywatchlist.databinding.FragmentSearchBinding
-import com.example.mywatchlist.ui.Filters
+import com.example.mywatchlist.util.Filters
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

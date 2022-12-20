@@ -8,7 +8,7 @@ import com.example.mywatchlist.database.WatchlistDao
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.network.api.MoviesService
 import com.example.mywatchlist.network.entity.movieslist.Movie
-import com.example.mywatchlist.ui.Filters
+import com.example.mywatchlist.util.Filters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Job

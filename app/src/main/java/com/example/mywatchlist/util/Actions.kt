@@ -1,4 +1,4 @@
-package com.example.mywatchlist.ui
+package com.example.mywatchlist.util
 
 enum class Actions {
     GO_TO_DESCRIPTION,
