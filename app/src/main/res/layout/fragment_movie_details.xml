@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent" />
     <TextView
         android:id="@+id/tag_line"
-        android:padding="16dp"
+        android:padding="8dp"
         android:textStyle="italic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent" />
     <TextView
         android:id="@+id/audienceRating"
-        android:paddingEnd="4dp"
+        android:paddingEnd="8dp"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -51,7 +51,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textAlignment="textStart"
-        android:paddingStart="4dp"
+        android:paddingStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tag_line"/>
     <TextView
@@ -121,11 +121,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription="@string/contentDescription1" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addToWatchlistFragmentDetail"
+        android:id="@+id/fab_add_to_watchlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_baseline_watch_later_24"
+        android:src="@drawable/ic_baseline_playlist_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/contentDescription2" />

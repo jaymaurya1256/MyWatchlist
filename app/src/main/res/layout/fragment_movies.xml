@@ -23,8 +23,23 @@
         android:layout_height="wrap_content"
         android:layout_margin="22dp"
         android:src="@drawable/ic_baseline_movie_filter_24"
+        android:foreground="?attr/selectableItemBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_no_result"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/no_search_results"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMovies"

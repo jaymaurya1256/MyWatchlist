@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import com.example.mywatchlist.R
-import com.example.mywatchlist.databinding.ListItemCasteBinding
+import com.example.mywatchlist.databinding.ListItemCastBinding
 import com.example.mywatchlist.network.entity.listofcast.Cast
 
 class CastAdapter(val listOfCast: List<Cast>): RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
-    class CastViewHolder(val binding: ListItemCasteBinding):RecyclerView.ViewHolder(binding.root) {
+    class CastViewHolder(val binding: ListItemCastBinding):RecyclerView.ViewHolder(binding.root) {
         val imageView = binding.imageCast
         var textView = binding.casteName
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
-        val binding = ListItemCasteBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ListItemCastBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return CastViewHolder(binding)
     }
 

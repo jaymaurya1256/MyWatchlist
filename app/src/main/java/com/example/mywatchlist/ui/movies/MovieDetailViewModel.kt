@@ -1,39 +1,42 @@
 package com.example.mywatchlist.ui.movies
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.mywatchlist.database.WatchlistDao
-import com.example.mywatchlist.database.WatchlistDatabase
 import com.example.mywatchlist.database.WatchlistTable
 import com.example.mywatchlist.network.api.MoviesService
 import com.example.mywatchlist.network.entity.listofcast.ListOfCast
 import com.example.mywatchlist.network.entity.moviedetails.MoviesDetails
+import com.example.mywatchlist.network.entity.movieslist.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 private const val TAG = "MovieDetailViewModel"
-@HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val db: WatchlistDao, private val api: MoviesService) : ViewModel(){
-    var requestedMovie = MutableLiveData<MoviesDetails>()
-    var castList = MutableLiveData<ListOfCast>()
 
-    fun getMovieDetails(movieId: Int){
-        Log.d(TAG, "getMovieDetails: function called in view model")
+@HiltViewModel
+class MovieDetailViewModel @Inject constructor(
+    private val db: WatchlistDao,
+    private val api: MoviesService,
+) : ViewModel() {
+    val movieDetails = MutableLiveData<MoviesDetails>()
+    val castList = MutableLiveData<ListOfCast>()
+    val message = MutableLiveData<String>()
+
+    fun getMovieFromDB(movieId: Int) = db.getMovie(movieId)
+
+    fun getMovieDetails(movieId: Int) {
         viewModelScope.launch {
             try {
-                Log.d(TAG, "getMovieDetails: calling from movies detail view model")
-                requestedMovie.value = api.getDetail(movieId)
-                Log.d(TAG, "getMovieDetails: success")
-            } catch (e: Exception){
-                Log.d(TAG, "getMovieDetails: failed with - $e")
+                movieDetails.value = api.getDetail(movieId)
+                getCast(movieId)
+            } catch (_: Exception) {
+                Log.e(TAG, "getMovieDetails: ")
             }
         }
     }
 
-    fun getCast(movieId: Int) {
+    private fun getCast(movieId: Int) {
         try {
             viewModelScope.launch {
                 castList.value = api.getCast(movieId)
@@ -43,9 +46,24 @@ class MovieDetailViewModel @Inject constructor(private val db: WatchlistDao, pri
         }
     }
 
-    fun addToWatchlist(id: Int, title: String, description: String, imageURL: String, isAdult: Boolean){
+    fun switchWatchlistStatus(movieDetail: MoviesDetails) {
         viewModelScope.launch {
-            db.addToWatchList(WatchlistTable(id, title, description, imageURL, isAdult))
+            val movie = db.getMovieOneShot(movieDetail.id)
+            if (movie != null) {
+                db.removeFromList(movie.id)
+                message.value = "${movieDetail.title} removed from the watchlist"
+            } else {
+                db.addToWatchList(
+                    WatchlistTable(
+                        movieDetail.id,
+                        movieDetail.title,
+                        movieDetail.overview,
+                        movieDetail.poster_path ?: movieDetail.backdrop_path ?: "",
+                        movieDetail.adult
+                    )
+                )
+                message.value = "${movieDetail.title} added to the watchlist"
+            }
         }
     }
 }

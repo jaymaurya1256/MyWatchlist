@@ -2,33 +2,53 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/popular_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/popular_filter"/>
     <item
         android:id="@+id/new_releases_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/new_filter"/>
     <item
         android:id="@+id/top_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/top_filter"/>
     <item
         android:id="@+id/crime_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/crime_filter"/>
     <item
         android:id="@+id/drama_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/drama_filter"/>
     <item
         android:id="@+id/comedy_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/comedy_filter"/>
     <item
         android:id="@+id/action_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/action_filter"/>
     <item
         android:id="@+id/suspense_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/suspense_filter"/>
     <item
         android:id="@+id/thriller_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/thriller_filter"/>
     <item
         android:id="@+id/horror_filter"
+        android:checkable="true"
+        android:checked="false"
         android:title="@string/horror_filter"/>
 
 </menu>
