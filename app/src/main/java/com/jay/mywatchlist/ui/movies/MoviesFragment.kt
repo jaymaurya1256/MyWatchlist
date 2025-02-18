@@ -2,17 +2,22 @@ package com.jay.mywatchlist.ui.movies
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowMetrics
 import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.jay.mywatchlist.R
 import com.jay.mywatchlist.databinding.FragmentMoviesBinding
 import com.jay.mywatchlist.util.Actions
@@ -28,6 +33,25 @@ private const val TAG = "MoviesFragment"
 class MoviesFragment : Fragment() {
     private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var binding: FragmentMoviesBinding
+    private val adRequest = AdRequest.Builder().build()
+
+
+    // Get the ad size with screen width.
+    private val adSize: AdSize
+        get() {
+            val displayMetrics = resources.displayMetrics
+            val adWidthPixels =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val windowMetrics: WindowMetrics = requireActivity().windowManager.currentWindowMetrics
+                    windowMetrics.bounds.width()
+                } else {
+                    displayMetrics.widthPixels
+                }
+            val density = displayMetrics.density
+            val adWidth = (adWidthPixels / density).toInt()
+            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireActivity(), adWidth)
+        }
+
     val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (viewModel.currentFilter != Filters.POPULAR) {
@@ -51,6 +75,18 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Create a new ad view.
+        val adView = AdView(requireContext())
+        adView.adUnitId = "ca-app-pub-3940256099942544/9214589741"
+        adView.setAdSize(adSize)
+
+        binding.adView.removeAllViews()
+        binding.adView.addView(adView)
+
+        adView.loadAd(adRequest)
+
+
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(), 2)
         val adapter =
             MoviesAdapter(nextPage = { viewModel.getMoreMovies() }) { movieId, title, description, image, isActive, action ->
@@ -137,6 +173,8 @@ class MoviesFragment : Fragment() {
                 Filters.HORROR -> {
                     popupMenu.menu.findItem(R.id.horror_filter).isChecked = true
                 }
+
+                Filters.SEARCH -> {}
             }
             popupMenu.show()
             popupMenu.setOnMenuItemClickListener {

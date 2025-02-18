@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.jay.mywatchlist"
         minSdk 21
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -39,6 +39,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.jay.mywatchlist'
 }
 
 dependencies {
@@ -89,6 +90,9 @@ dependencies {
 
     //lottie
     implementation "com.airbnb.android:lottie:3.4.0"
+
+    //google ad mob
+    implementation("com.google.android.gms:play-services-ads:23.6.0")
 }
 
 kapt {
