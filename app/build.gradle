@@ -13,7 +13,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        applicationId "com.example.mywatchlist"
+        applicationId "com.jay.mywatchlist"
         minSdk 21
         targetSdk 32
         versionCode 1
