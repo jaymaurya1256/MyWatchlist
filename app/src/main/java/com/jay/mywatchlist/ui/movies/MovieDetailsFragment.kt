@@ -18,6 +18,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.jay.mywatchlist.R
 import com.jay.mywatchlist.databinding.FragmentMovieDetailsBinding
 import com.jay.mywatchlist.network.entity.moviedetails.MoviesDetails
@@ -63,7 +69,7 @@ class MovieDetailsFragment : Fragment() {
         }
 
         viewModel.message.observe(viewLifecycleOwner) {
-                binding.root.shortSnackbar(it)
+            binding.root.shortSnackbar(it)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,

@@ -24,6 +24,7 @@ import com.jay.mywatchlist.util.Actions
 import com.jay.mywatchlist.util.Filters
 import com.jay.mywatchlist.util.shortSnackbar
 import com.google.android.material.snackbar.Snackbar
+import com.jay.mywatchlist.util.startAds
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
 
@@ -92,11 +93,13 @@ class MoviesFragment : Fragment() {
             MoviesAdapter(nextPage = { viewModel.getMoreMovies() }) { movieId, title, description, image, isActive, action ->
                 when (action) {
                     Actions.GO_TO_DESCRIPTION -> {
-                        val navigationAction =
-                            MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
-                                movieId
-                            )
-                        findNavController().navigate(navigationAction)
+                        startAds(requireContext(), requireActivity()){
+                            val navigationAction =
+                                MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
+                                    movieId
+                                )
+                            findNavController().navigate(navigationAction)
+                        }
                     }
 
                     Actions.ADD_TO_WATCHLIST -> {
