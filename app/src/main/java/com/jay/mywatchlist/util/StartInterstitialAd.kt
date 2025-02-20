@@ -9,7 +9,6 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.jay.mywatchlist.ui.MainActivity
 
 private const val TAG = "Ads"
 private var mInterstitialAd: InterstitialAd? = null
@@ -20,12 +19,13 @@ fun startAds(context: Context, activity: Activity, onClose: ()-> Unit){
     //Ads config
     InterstitialAd.load(
         context,
-        "ca-app-pub-3940256099942544/1033173712",
+        interstitialAd,
         adRequest,
         object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 adError.toString().let { Log.d(TAG, it) }
                 mInterstitialAd = null
+                onClose()
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
@@ -48,6 +48,7 @@ fun startAds(context: Context, activity: Activity, onClose: ()-> Unit){
                         // Called when ad fails to show.
                         Log.e(TAG, "Ad failed to show fullscreen content.")
                         mInterstitialAd = null
+                        onClose()
                     }
 
                     override fun onAdImpression() {

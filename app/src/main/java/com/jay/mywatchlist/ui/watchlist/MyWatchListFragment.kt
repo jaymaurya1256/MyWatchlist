@@ -20,6 +20,8 @@ import com.jay.mywatchlist.database.WatchlistTable
 import com.jay.mywatchlist.databinding.FragmentWatchlistBinding
 import com.jay.mywatchlist.util.Actions
 import com.google.android.material.snackbar.Snackbar
+import com.jay.mywatchlist.util.adUnitId
+import com.jay.mywatchlist.util.startAds
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MyWatchListFragment"
@@ -60,7 +62,7 @@ class MyWatchListFragment : Fragment() {
 
         // Create a new ad view.
         val adView = AdView(requireContext())
-        adView.adUnitId = "ca-app-pub-3940256099942544/9214589741"
+        adView.adUnitId = adUnitId
         adView.setAdSize(adSize)
 
         binding.adView.removeAllViews()
@@ -83,7 +85,7 @@ class MyWatchListFragment : Fragment() {
                         viewModel.removeFromList(movieId)
                         Snackbar.make(binding.root, "Movie removed from Watchlist", Snackbar.LENGTH_SHORT).show()
                     }
-                    Actions.GO_TO_DESCRIPTION -> {
+                    Actions.GO_TO_DESCRIPTION -> startAds(requireContext(), requireActivity()) {
                         val navigationAction = MyWatchListFragmentDirections
                                 .actionMyWatchListFragmentToMovieDetailsFragment(movieId)
                         findNavController().navigate(navigationAction)

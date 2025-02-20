@@ -24,6 +24,7 @@ import com.jay.mywatchlist.util.Actions
 import com.jay.mywatchlist.util.Filters
 import com.jay.mywatchlist.util.shortSnackbar
 import com.google.android.material.snackbar.Snackbar
+import com.jay.mywatchlist.util.adUnitId
 import com.jay.mywatchlist.util.startAds
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
@@ -79,7 +80,7 @@ class MoviesFragment : Fragment() {
 
         // Create a new ad view.
         val adView = AdView(requireContext())
-        adView.adUnitId = "ca-app-pub-3940256099942544/9214589741"
+        adView.adUnitId = adUnitId
         adView.setAdSize(adSize)
 
         binding.adView.removeAllViews()
