@@ -16,8 +16,8 @@ android {
         applicationId "com.jay.mywatchlist"
         minSdk 21
         targetSdk 34
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -93,6 +93,8 @@ dependencies {
 
     //google ad mob
     implementation("com.google.android.gms:play-services-ads:23.6.0")
+
+    implementation('dnsjava:dnsjava:3.5.2')
 }
 
 kapt {

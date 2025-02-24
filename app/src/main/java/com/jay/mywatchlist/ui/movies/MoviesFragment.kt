@@ -44,14 +44,18 @@ class MoviesFragment : Fragment() {
             val displayMetrics = resources.displayMetrics
             val adWidthPixels =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    val windowMetrics: WindowMetrics = requireActivity().windowManager.currentWindowMetrics
+                    val windowMetrics: WindowMetrics =
+                        requireActivity().windowManager.currentWindowMetrics
                     windowMetrics.bounds.width()
                 } else {
                     displayMetrics.widthPixels
                 }
             val density = displayMetrics.density
             val adWidth = (adWidthPixels / density).toInt()
-            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireActivity(), adWidth)
+            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+                requireActivity(),
+                adWidth
+            )
         }
 
     val callback = object : OnBackPressedCallback(true) {
@@ -91,10 +95,12 @@ class MoviesFragment : Fragment() {
 
         binding.recyclerViewMovies.layoutManager = GridLayoutManager(requireContext(), 2)
         val adapter =
-            MoviesAdapter(nextPage = { viewModel.getMoreMovies() }) { movieId, title, description, image, isActive, action ->
+            MoviesAdapter(
+                requireContext().applicationContext,
+                nextPage = { viewModel.getMoreMovies() }) { movieId, title, description, image, isActive, action ->
                 when (action) {
                     Actions.GO_TO_DESCRIPTION -> {
-                        startAds(requireContext(), requireActivity()){
+                        startAds(requireContext(), requireActivity()) {
                             val navigationAction =
                                 MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(
                                     movieId

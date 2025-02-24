@@ -1,5 +1,6 @@
 package com.jay.mywatchlist.di
 
+import com.jay.mywatchlist.util.GoogleDns
 import android.content.Context
 import androidx.room.Room
 import com.jay.mywatchlist.database.WatchlistDao
@@ -27,7 +28,7 @@ object Module {
     @Provides
     @Singleton
     fun provideOkHttpClient() =
-        OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+        OkHttpClient.Builder().dns(GoogleDns()).addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }).build()
 

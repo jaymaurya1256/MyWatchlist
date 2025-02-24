@@ -1,5 +1,6 @@
 package com.jay.mywatchlist.ui.movies
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.jay.mywatchlist.R
 import com.jay.mywatchlist.databinding.ListItemMoviesBinding
 import com.jay.mywatchlist.network.entity.movieslist.Movie
 import com.jay.mywatchlist.util.Actions
+import com.jay.mywatchlist.util.createCoilImageLoader
 import com.jay.mywatchlist.util.toImageUrl
 
 private const val TAG = "MoviesAdapter"
@@ -30,6 +32,7 @@ class MoviesDiff : DiffUtil.ItemCallback<Movie>() {
 
 
 class MoviesAdapter(
+    val context: Context,
     val nextPage: () -> Unit,
     val onClick: (Int, String, String, String, Boolean, Actions) -> Unit
 ) : ListAdapter<Movie, MoviesAdapter.ItemViewHolder>(MoviesDiff()) {
@@ -50,8 +53,9 @@ class MoviesAdapter(
         if (position > currentList.size - 6) {
             nextPage()
         }
+        val imageLoader = createCoilImageLoader(context)
         with(holder.binding) {
-            image.load(movie.poster_path?.toImageUrl()) {
+            image.load(movie.poster_path?.toImageUrl(), imageLoader) {
                 placeholder(CircularProgressDrawable(holder.binding.root.context).apply {
                     strokeWidth = 5f
                     centerRadius = 30f
