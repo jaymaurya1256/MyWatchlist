@@ -27,6 +27,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.jay.mywatchlist.R
 import com.jay.mywatchlist.databinding.FragmentMovieDetailsBinding
 import com.jay.mywatchlist.network.entity.moviedetails.MoviesDetails
+import com.jay.mywatchlist.util.createCoilImageLoader
 import com.jay.mywatchlist.util.shortSnackbar
 import com.jay.mywatchlist.util.toImageUrl
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,7 +88,7 @@ class MovieDetailsFragment : Fragment() {
             castRecyclerView.layoutManager =
                 GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
             viewModel.castList.observe(viewLifecycleOwner) {
-                castRecyclerView.adapter = it.cast?.let { it1 -> CastAdapter(it1.take(10)) }
+                castRecyclerView.adapter = it.cast?.let { it1 -> CastAdapter(it1.take(10), requireContext().applicationContext) }
             }
             audienceRating.text =
                 getString(R.string.rating) + ": " + movieDetails.vote_average.toString().take(4)
@@ -105,7 +106,8 @@ class MovieDetailsFragment : Fragment() {
                 nameOfProductionCompany += "Unknown"
             }
             studioName.text = nameOfProductionCompany
-            movieImage.load(movieDetails.poster_path?.toImageUrl()) {
+            val imageLoader = createCoilImageLoader(requireContext().applicationContext)
+            movieImage.load(movieDetails.poster_path?.toImageUrl(), imageLoader) {
                 crossfade(true)
                 crossfade(1000)
                 placeholder(CircularProgressDrawable(requireContext()).apply {

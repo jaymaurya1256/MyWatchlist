@@ -1,5 +1,6 @@
 package com.jay.mywatchlist.ui.movies
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,8 +9,9 @@ import coil.load
 import com.jay.mywatchlist.R
 import com.jay.mywatchlist.databinding.ListItemCastBinding
 import com.jay.mywatchlist.network.entity.listofcast.Cast
+import com.jay.mywatchlist.util.createCoilImageLoader
 
-class CastAdapter(val listOfCast: List<Cast>): RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
+class CastAdapter(val listOfCast: List<Cast>, val context: Context): RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
     class CastViewHolder(val binding: ListItemCastBinding):RecyclerView.ViewHolder(binding.root) {
         val imageView = binding.imageCast
         var textView = binding.casteName
@@ -22,7 +24,8 @@ class CastAdapter(val listOfCast: List<Cast>): RecyclerView.Adapter<CastAdapter.
 
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
         holder.textView.text = listOfCast[position].name
-        holder.imageView.load("https://www.themoviedb.org/t/p/w300_and_h450_bestv2"+listOfCast[position].profile_path) {
+        val imageLoader = createCoilImageLoader(context)
+        holder.imageView.load("https://www.themoviedb.org/t/p/w300_and_h450_bestv2"+listOfCast[position].profile_path, imageLoader) {
             placeholder(CircularProgressDrawable(holder.binding.root.context).apply {
                 strokeWidth = 5f
                 centerRadius = 30f
